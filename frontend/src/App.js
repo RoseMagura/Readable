@@ -4,12 +4,15 @@ import Homepage from './components/Homepage';
 import PostList from './components/PostList';
 import CreatePost from './components/CreatePost';
 import EditPost from './components/EditPost';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './reducers';
+import middleware from './middleware';
 
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
   } from "react-router-dom";
 
 const NoMatchPage = () => {
@@ -20,7 +23,7 @@ const NoMatchPage = () => {
 
 function App() {
   return (
-    <div className="App">
+    <Provider store={createStore(reducer, middleware)}>
         <Router>
             <Switch>
                 <Route exact path='/'>
@@ -40,8 +43,7 @@ function App() {
                 </Route>
             </Switch>
         </Router>
-
-    </div>
+    </Provider>
   );
 }
 

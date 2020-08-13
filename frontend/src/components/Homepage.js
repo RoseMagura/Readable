@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import CategoryList from './CategoryList';
 import PostList from './PostList';
 import CommentList from './CommentList';
+import { withRouter } from 'react-router';
 
 class Homepage extends Component {
     linkToNewPost = () => {
-        alert('new post')
+        this.props.history.push('/posts/create');
     }
     render() {
         return (
@@ -14,10 +15,13 @@ class Homepage extends Component {
                 <CategoryList/>
                 <PostList />
                 <CommentList />
-                <button onClick={this.linkToNewPost}>New Post</button>
+                <button type='button' onClick={this.linkToNewPost}>
+                    New Post
+                </button>
+                {/* {PostButton()} */}
             </div>
         )
     }
 }
 
-export default Homepage
+export default withRouter(Homepage)

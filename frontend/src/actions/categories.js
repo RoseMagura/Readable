@@ -1,5 +1,8 @@
-export function handleInitialData () {
+export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
+
+export function receiveCategories (categories) {
     return{
-        data: 'data'
+        type: RECEIVE_CATEGORIES,
+        categories
     }
 }

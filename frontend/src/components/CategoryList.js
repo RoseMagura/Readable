@@ -1,16 +1,37 @@
 import React, { Component } from 'react';
 import { handleGetCategories } from '../actions/shared';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class CategoryList extends Component {
     componentDidMount () {
-        this.props.dispatch(handleGetCategories());
+        // this.props.dispatch(handleGetCategories());
     }
     render() {
+        let loading = this.props.categories.length === undefined
+        const { categories } = this.props
         return (
-            <h2>CategoryList</h2>
+            <div>
+            <h2>Categories</h2>
+            {
+                !loading && categories.map((category) => 
+                <li key={category.name}>
+                    <Link to={{
+                        pathname: `/category/${category.path}`
+                        }}>
+                        {category.name}
+                    </Link>
+                </li>)
+            }
+            </div>
         )
     }
 }
 
-export default connect()(CategoryList)
+function mapStateToProps ({ categories, dispatch }) {
+    return {
+        categories,
+        dispatch
+    }
+}
+export default connect(mapStateToProps)(CategoryList)

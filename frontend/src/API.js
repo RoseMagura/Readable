@@ -9,7 +9,7 @@ const headers = {
 export const getAllCategories = () => 
     fetch(`${api}/categories`, { headers })
     .then(res => res.json())
-    .then(data => data.categories)
+    // .then(data => data.categories)
 
 export const getAllPosts = () => 
     fetch(`${api}/posts`, { headers })
@@ -20,19 +20,25 @@ export const getCategoryPosts = (category) =>
     fetch(`${api}/${category}/posts`, { headers })
     .then(res => res.json())
 
-// export const postNewPost = (id, timestamp, title, body, author, category) =>
-//     await fetch(`${api}/posts`, {
-//         method: 'POST',
-//         headers: { headers },
-//         body: JSON.stringify({
-//             // do these need quotes?
-//             'id': id, 
-//             'timestamp': timestamp,
-//             'title': title,
-//             'body': body,
-//             'author': author,
-//             'category': category})
-//     }).then(res => res.json())
+export const postNewPost = (id, timestamp, title, body, author, 
+    category) => (
+        fetch(`http://localhost:3001/posts`, {
+                method: 'POST',
+                headers: { 
+                    'Accept': 'application/json',
+                    'Authorization': 'mysecret' 
+                },
+                body: JSON.stringify({
+                    // do these need quotes?
+                    'id': id, 
+                    'timestamp': timestamp,
+                    'title': title,
+                    'body': body,
+                    'author': author,
+                    'category': category,
+                })
+               }).then((res) => res.json())
+    )
 
 export const getPostDetails = (id) => 
     fetch(`${api}/post/${id}`, { headers })

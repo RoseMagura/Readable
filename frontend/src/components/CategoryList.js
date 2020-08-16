@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class CategoryList extends Component {
-    componentDidMount () {
-        // this.props.dispatch(handleGetCategories());
-    }
     render() {
         let loading = this.props.categories.length === undefined
         const { categories } = this.props

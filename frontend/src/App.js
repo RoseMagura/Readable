@@ -28,9 +28,12 @@ class App extends Component {
             <Provider store={createStore(reducer, middleware)}>
                 <Router>
                     <Switch>
-                        <Route exact path='/'>
-                            <Homepage />  
-                        </Route>
+                        <Route exact path='/'
+                            component={(props) => (
+                                <Homepage 
+                                    history={props.history}/>  
+                            )}
+                        />
                         <Route exact path='/category/:categoryId'
                             component={(props) => (
                                 <Category 
@@ -41,6 +44,12 @@ class App extends Component {
                         <Route exact path='/posts'>
                             <PostList />
                         </Route>
+                        <Route exact path='/posts/create'>
+                            <CreatePost />
+                        </Route>
+                        <Route exact path='/posts/edit'>
+                            <EditPost />
+                        </Route>
                         <Route exact path='/posts/:postId'
                             component={(props) => (
                                 <PostDetail 
@@ -48,13 +57,7 @@ class App extends Component {
                                     posts={props.posts}
                                     history={props.history}/>  
                             )}
-                        />
-                        <Route path='/posts/create'>
-                            <CreatePost />
-                        </Route>
-                        <Route exact path='/posts/edit'>
-                            <EditPost />
-                        </Route>  
+                        />  
                         <Route>
                             <NoMatchPage />
                         </Route>

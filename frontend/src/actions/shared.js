@@ -1,9 +1,10 @@
 import { receiveCategories } from './categories';
-import { receivePosts } from './posts';
+import { receivePosts, addPost } from './posts';
 import { 
     getAllCategories,
     getAllPosts,
-    getCommentsForPost
+    getCommentsForPost, 
+    postNewPost
 } from '../API';
 import { receiveComments } from './comments';
 
@@ -35,3 +36,15 @@ export function handleGetComments (post) {
             })
     }
 }
+
+export function handlePosting (id, timestamp, title, body, author, category) {
+    return async dispatch => {
+        try{
+            await postNewPost()
+            dispatch(addPost(id, timestamp, title, body, author, category))
+        } 
+        catch(error) {
+            console.log(error);
+        }
+        return 'done';
+}}

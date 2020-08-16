@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { withRouter } from 'react-router';
 import { handleGetComments } from '../actions/shared';
+import { convertUnix } from './PostDetail';
 
 class Category extends Component {
     componentDidMount() {
@@ -11,15 +11,6 @@ class Category extends Component {
                 this.props.dispatch(handleGetComments(p.id))
             );
     }
-    convertUnix = (timestamp) => {
-        const date = new Date(timestamp * 1000);
-        const formattedDate = date.toDateString().split('48')[0];
-        const hours = date.getHours();
-        const minutes = '0' + date.getMinutes();
-        const formattedTime =
-            hours + ':' + minutes.substr(-2) + ' on ' + formattedDate;
-        return formattedTime;
-    };
     linkToNewPost = () => {
         this.props.history.push('/posts/create');
     };
@@ -50,7 +41,7 @@ class Category extends Component {
                                 <br />
                                 by {post.author}
                                 <br />
-                                at {this.convertUnix(post.timestamp)}
+                                at {convertUnix(post.timestamp)}
                                 <br />
                                 {post.voteScore} votes
                                 <button>Upvote</button>
@@ -79,7 +70,7 @@ class Category extends Component {
                                     <li key={comment.id}>
                                         {comment.author} <br />
                                         responding to '{post.title}'<br />
-                                        at {this.convertUnix(comment.timestamp)}
+                                        at {convertUnix(comment.timestamp)}
                                         <br />
                                         {comment.body}
                                         <br />

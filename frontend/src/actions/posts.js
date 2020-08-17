@@ -1,5 +1,6 @@
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS';
-export const ADD_POST = 'ADD_POST'
+export const ADD_POST = 'ADD_POST';
+export const REMOVE_POST = 'REMOVE_POST';
 
 export function receivePosts (posts) {
     return {
@@ -19,5 +20,12 @@ export function addPost (id, timestamp, title, body, author, category) {
             author,
             category
     }
+    }
+}
+
+export function removePost (id) {
+    return{
+        type: REMOVE_POST,
+        id
     }
 }

@@ -15,6 +15,9 @@ import {
     Switch,
     Route,
   } from "react-router-dom";
+import { handleGetComments, 
+    handleGetAllPosts, handleGetCategories } from './actions/shared';
+import { connect } from 'react-redux';
 
 const NoMatchPage = () => {
     return(
@@ -23,9 +26,12 @@ const NoMatchPage = () => {
 }    
 
 class App extends Component {
+    componentDidMount () {
+        this.props.dispatch(handleGetCategories());
+        this.props.dispatch(handleGetAllPosts())
+    }
     render(){
         return (
-            <Provider store={createStore(reducer, middleware)}>
                 <Router>
                     <Switch>
                         <Route exact path='/'
@@ -44,9 +50,13 @@ class App extends Component {
                         <Route exact path='/posts'>
                             <PostList />
                         </Route>
-                        <Route exact path='/posts/create'>
-                            <CreatePost />
-                        </Route>
+                        <Route 
+                            exact path='/posts/create'
+                            component={(props) => (
+                                <CreatePost 
+                                    history={props.history}/>  
+                            )}
+                        />
                         <Route exact path='/posts/edit'>
                             <EditPost />
                         </Route>
@@ -63,8 +73,7 @@ class App extends Component {
                         </Route>
                     </Switch>
                 </Router>
-            </Provider>
         );
 }}
 
-export default App;
+export default connect()(App);

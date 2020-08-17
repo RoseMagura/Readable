@@ -72,8 +72,7 @@ class CreatePost extends Component {
         // generate unique ID
         const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
         dispatch(handlePosting(id, timestamp, title, body, author, category))
-        
-        // this.props.history.push('/')
+        this.props.history.push('/')
     }
     render() {
         return (
@@ -84,10 +83,5 @@ class CreatePost extends Component {
         )
     }
 }
-function mapStateToProps ({ history, dispatch }) {
-    return {
-        history,
-        dispatch
-    }
-}
-export default connect(mapStateToProps)(CreatePost)
+
+export default connect()(CreatePost)

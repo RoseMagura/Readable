@@ -8,13 +8,13 @@ const headers = {
 
 export const getAllCategories = () => 
     fetch(`${api}/categories`, { headers })
-    .then(res => res.json())
-    // .then(data => data.categories)
+    .then(res =>  res.json())
+    .then(data => data.categories)
 
 export const getAllPosts = () => 
     fetch(`${api}/posts`, { headers })
     .then(res => res.json())
-    // .then(data => data.post)
+    // .then(data => data.posts)
 
 export const getCategoryPosts = (category) => 
     fetch(`${api}/${category}/posts`, { headers })
@@ -67,11 +67,11 @@ export const getPostDetails = (id) =>
 //         })})
 //         .then(res => res.json())
 
-// export const deletePost = (id) =>
-//     await fetch(`${api}/posts/${id}`, {
-//         method: 'DELETE',
-//         headers: { headers }})
-//         .then(res => res.json())
+export const deletePost = (id) =>
+    fetch(`${api}/posts/${id}`, {
+        method: 'DELETE',
+        headers: { headers }})
+        .then(res => res.json())
 
 export const getCommentsForPost = (id) =>
     fetch(`${api}/posts/${id}/comments`, { headers })

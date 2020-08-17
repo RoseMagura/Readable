@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleGetAllPosts, handleGetComments } from '../actions/shared';
 import { Link } from 'react-router-dom';
 import { convertUnix } from './PostDetail';
+import { handleDeletePost } from '../actions/shared';
 
 class PostList extends Component {
+    deletePost = (e) => {
+        e.preventDefault()
+        console.log('DELETING', e.target.id)
+        this.props.dispatch(handleDeletePost(e.target.id))
+    }
     render() {
         let loading = this.props.posts.length === undefined
         const { posts } = this.props
@@ -23,7 +28,10 @@ class PostList extends Component {
                 <button>Downvote</button> <br/>
                 {post.commentCount} comments <br/>
                 <button>Edit</button> <br/>
-                <button>Delete</button> <br/>
+                <button 
+                    id={`${post.id}`}
+                    onClick={(e) => this.deletePost(e)
+                    }>Delete</button> <br/>
             </li>))}
             </div>
         )

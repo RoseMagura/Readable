@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleGetComments } from '../actions/shared';
+import { deletePost } from './PostList';
 
 export const convertUnix = (timestamp) => {
     const date = new Date(timestamp);
@@ -24,7 +25,7 @@ class PostDetail extends Component {
         !loading && this.props.dispatch(handleGetComments(post.id));
     }
     render() {
-        const { posts, comments, postId } = this.props;
+        const { posts, comments, postId, history } = this.props;
         const loading = Object.values(posts).length === undefined;
         let postArray = [];
         !loading &&
@@ -52,7 +53,14 @@ class PostDetail extends Component {
                         <button>Downvote</button> <br />
                         {post.commentCount} comments <br />
                         <button>Edit</button> <br />
-                        <button>Delete</button> <br />
+                        <button
+                        id={`${post.id}`}
+                        name={`${post.title}`}
+                        onClick={(e) =>{ 
+                            deletePost(e, this.props.dispatch)
+                            history.push('/')}
+                            }>
+                            Delete</button> <br />
                         <h2>Comments</h2>
                         {post.commentCount > 0 ? (
                             <ul>

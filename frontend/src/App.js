@@ -6,17 +6,12 @@ import PostDetail from './components/PostDetail';
 import CreatePost from './components/CreatePost';
 import EditPost from './components/EditPost';
 import Category from './components/Category';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import reducer from './reducers';
-import middleware from './middleware';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
   } from "react-router-dom";
-import { handleGetComments, 
-    handleGetAllPosts, handleGetCategories } from './actions/shared';
+import { handleGetAllPosts, handleGetCategories } from './actions/shared';
 import { connect } from 'react-redux';
 
 const NoMatchPage = () => {

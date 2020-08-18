@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleGetComments } from '../actions/shared';
 import { convertUnix } from './PostDetail';
+import { deletePost } from './PostList';
 
 class Category extends Component {
-    // state = {
-    //     buttonExists: false
-    // }
     componentDidMount() {
         const { loading } = this.props;
         !loading &&
@@ -54,7 +52,11 @@ class Category extends Component {
                                 <button>Downvote</button> <br />
                                 {post.commentCount} comments <br />
                                 <button>Edit</button> <br />
-                                <button>Delete</button> <br />
+                                <button
+                                id={`${post.id}`}
+                                name={`${post.title}`}
+                                onClick={(e) => deletePost(e, this.props.dispatch)}
+                                >Delete</button> <br />
                             </li>
                         ))
                     )}

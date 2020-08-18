@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import { convertUnix } from './PostDetail';
 import { handleDeletePost } from '../actions/shared';
 
+export const deletePost = (e, dispatch) => {
+    e.preventDefault()
+    const result = window.confirm(`Are you sure you want to delete the post ${e.target.name}?`)
+    result && dispatch(handleDeletePost(e.target.id))
+}
 class PostList extends Component {
-    deletePost = (e) => {
-        e.preventDefault()
-        console.log('DELETING', e.target.id)
-        this.props.dispatch(handleDeletePost(e.target.id))
-    }
     render() {
         const { posts } = this.props
         let loading = Object.values(posts).length === 0
@@ -33,7 +33,8 @@ class PostList extends Component {
                 <button>Edit</button> <br/>
                 <button 
                     id={`${post.id}`}
-                    onClick={(e) => this.deletePost(e)
+                    name={`${post.title}`}
+                    onClick={(e) => deletePost(e, this.props.dispatch)
                     }>Delete</button> <br/>
             </li>))
             }

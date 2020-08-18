@@ -4,6 +4,9 @@ import { handleGetComments } from '../actions/shared';
 import { convertUnix } from './PostDetail';
 
 class Category extends Component {
+    // state = {
+    //     buttonExists: false
+    // }
     componentDidMount() {
         const { loading } = this.props;
         !loading &&
@@ -16,6 +19,7 @@ class Category extends Component {
     };
     render() {
         const { categoryId, posts, comments, loading } = this.props;
+        console.log('posts', posts);
         const formattedTitle =
             categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
         let topicPosts = [];
@@ -24,7 +28,7 @@ class Category extends Component {
                 (post) => post.category === categoryId && topicPosts.push(post)
             );
         let totalComments = 0;
-        topicPosts.map((p) => totalComments += p.commentCount)
+        topicPosts.map((p) => (totalComments += p.commentCount));
         return (
             <div>
                 <h3>{formattedTitle}</h3>
@@ -62,30 +66,55 @@ class Category extends Component {
                 </div>
                 <div>
                     <h4>Comments</h4>
-                        {totalComments === 0 &&
-                             <h5>No Comments</h5>}
-                       {!loading && topicPosts.length !== 0 && 
-                          topicPosts.map((post) =>
-                            post.commentCount > 0 && (
-                                comments[`${post.id}`] !== undefined &&
-                                comments[`${post.id}`].map((comment) => (
-                                    <li key={comment.id}>
-                                        {comment.author} <br />
-                                     responding to '{post.title}'<br />
-                                        at {convertUnix(comment.timestamp)}
-                                        <br />
-                                        {comment.body}
-                                        <br />
-                                        {comment.voteScore} votes
-                                        <button>Upvote</button>
-                                        <button>Downvote</button> <br />
-                                        <button>Edit</button> <br />
-                                        <button>Delete</button> <br />
-                                    </li>
-                                ))
-                            ) 
-                        )
-                    }
+                    {totalComments === 0 && 
+                    (
+                        <div>
+                            <h5>No Comments</h5>
+                            <button id='add'>Add a Comment</button> <br />
+                        </div>
+                    )
+                     }
+                    <div>
+                        {!loading && topicPosts.length !== 0 && (
+                            <ul>
+                                {topicPosts.map(
+                                    (post) =>
+                                        post.commentCount > 0 &&
+                                        comments[`${post.id}`] !== undefined &&
+                                        comments[`${post.id}`].map(
+                                            (comment) => (
+                                                // console.log(comment)
+                                                <li key={comment.id}>
+                                                    {comment.author} <br />
+                                                    responding to '{post.title}'
+                                                    <br />
+                                                    at{' '}
+                                                    {convertUnix(
+                                                        comment.timestamp
+                                                    )}
+                                                    <br />
+                                                    {comment.body}
+                                                    <br />
+                                                    {comment.voteScore} votes
+                                                    <button>Upvote</button>
+                                                    <button>
+                                                        Downvote
+                                                    </button>{' '}
+                                                    <br />
+                                                    <button>Edit</button> <br />
+                                                    <button>Delete</button>{' '}
+                                                    <br />
+                                                </li>
+                                            )
+                                        )
+                                )}
+                                {/* add a button to add comment after looping 
+                            through comments */}
+                                {totalComments!== 0 && 
+                                <button>Add a Comment</button>}
+                            </ul>
+                        )}
+                    </div>
                 </div>
             </div>
         );

@@ -10,10 +10,7 @@ export default function posts (state = {}, action){
             // return [...action.posts.filter((post) => post.id !== undefined)]
             return [...action.posts]
         case ADD_POST :
-            return {
-                ...state,
-                [Object.keys(state).length]: {...action.post}
-            }    
+            return [...state.concat(action.post)] 
         case REMOVE_POST :
             // return Object.values(state).filter((post) => post.id !== undefined)
             return Object.values(state).filter((post) => post.id !== action.id)

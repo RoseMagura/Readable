@@ -31,7 +31,6 @@ export function handleGetComments (post) {
     return (dispatch) => {
         return getCommentsForPost(post)
             .then((res) => {
-                // console.log('res', res)
                 res.length > 0 
                     && dispatch(receiveComments(res))
             })
@@ -41,8 +40,14 @@ export function handleGetComments (post) {
 export function handlePosting (id, timestamp, title, body, author, category) {
     return async dispatch => {
         try{
-            await postNewPost()
-            dispatch(addPost(id, timestamp, title, body, author, category))
+            const res =  await postNewPost(id, timestamp, title, body, author, 
+                category)
+            const resArray = Object.values(res)
+            const voteScore = resArray[0];
+            const deleted = resArray[1];
+            const commentCount = resArray[2];
+            dispatch(addPost(id, timestamp, title, body, author, 
+                category, voteScore, deleted, commentCount ))
         } 
         catch(error) {
             console.log(error);

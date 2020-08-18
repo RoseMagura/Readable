@@ -38,6 +38,7 @@ export const postNewPost = (id, timestamp, title, body, author,
                     'category': category,
                 })
                }).then((res) => res.json())
+               .then(data => data)
     )
 
 export const getPostDetails = (id) => 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postNewPost } from '../API';
 import { handlePosting } from '../actions/shared';
 
 class CreatePost extends Component {
@@ -11,10 +10,11 @@ class CreatePost extends Component {
         title: '',
         toHome: false,
     }
-   generateUID () {
-        return Math.random().toString(36).substring(2, 15) 
-        + Math.random().toString(36).substring(2, 15)
-    }
+// TODO: FIX THIS ISSUE WITH CALLING THE FUNCTION
+//    generateUID () {
+//         return Math.random().toString(36).substring(2, 15) 
+//         + Math.random().toString(36).substring(2, 15)
+//     }
     makeForm () {
         return (
             <form onSubmit={this.handleSubmit}>
@@ -49,9 +49,9 @@ class CreatePost extends Component {
                     defaultValue={'Pick a category'}
                     onChange={this.handleChange} >
                     <option value='Pick a category'>Pick a category</option>
-                    <option value='React'>React</option>
-                    <option value='Redux'>Redux</option>
-                    <option value='Udacity'>Udacity</option>
+                    <option value='react'>React</option>
+                    <option value='redux'>Redux</option>
+                    <option value='udacity'>Udacity</option>
                 </select>
             </label><br/>
             <input type='submit' value='Submit' />

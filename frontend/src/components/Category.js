@@ -15,7 +15,7 @@ class Category extends Component {
         this.props.history.push('/posts/create');
     };
     render() {
-        const { categoryId, posts, comments } = this.props;
+        const { categoryId, posts, comments, loading } = this.props;
         const formattedTitle =
             categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
         let topicPosts = [];
@@ -23,6 +23,8 @@ class Category extends Component {
             posts.map(
                 (post) => post.category === categoryId && topicPosts.push(post)
             );
+        let totalComments = 0;
+        topicPosts.map((p) => totalComments += p.commentCount)
         return (
             <div>
                 <h3>{formattedTitle}</h3>
@@ -60,16 +62,16 @@ class Category extends Component {
                 </div>
                 <div>
                     <h4>Comments</h4>
-                    {topicPosts.length !== 0 && this.props.commentsLoading ? (
-                        <h5>No Comments</h5>
-                    ) : (
-                        topicPosts.map((post) =>
-                            post.commentCount > 0 ? (
+                        {totalComments === 0 &&
+                             <h5>No Comments</h5>}
+                       {!loading && topicPosts.length !== 0 && 
+                          topicPosts.map((post) =>
+                            post.commentCount > 0 && (
                                 comments[`${post.id}`] !== undefined &&
                                 comments[`${post.id}`].map((comment) => (
                                     <li key={comment.id}>
                                         {comment.author} <br />
-                                        responding to '{post.title}'<br />
+                                     responding to '{post.title}'<br />
                                         at {convertUnix(comment.timestamp)}
                                         <br />
                                         {comment.body}
@@ -81,11 +83,9 @@ class Category extends Component {
                                         <button>Delete</button> <br />
                                     </li>
                                 ))
-                            ) : (
-                                <h5 key={post.id}>No Comments</h5>
-                            )
+                            ) 
                         )
-                    )}
+                    }
                 </div>
             </div>
         );
@@ -98,7 +98,6 @@ function mapStateToProps({ posts, comments, dispatch }) {
         comments,
         dispatch,
         loading: posts.length === undefined,
-        commentsLoading: Object.values(comments).length === undefined,
     };
 }
 export default connect(mapStateToProps)(Category);

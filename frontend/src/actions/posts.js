@@ -9,7 +9,8 @@ export function receivePosts (posts) {
     }
 }
 
-export function addPost (id, timestamp, title, body, author, category) {
+export function addPost (id, timestamp, title, body, author, 
+    category, voteScore, deleted, commentCount) {
     return {
         type: ADD_POST,
         post: {
@@ -18,7 +19,10 @@ export function addPost (id, timestamp, title, body, author, category) {
             title,
             body,
             author,
-            category
+            category,
+            voteScore, 
+            deleted, 
+            commentCount
     }
     }
 }

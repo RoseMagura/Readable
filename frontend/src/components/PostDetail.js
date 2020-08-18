@@ -14,8 +14,7 @@ export const convertUnix = (timestamp) => {
 
 class PostDetail extends Component {
     componentDidMount () {
-        // console.log(this.props.loading)
-        const { loading } = this.props
+        const loading = this.props.posts.length === undefined
         let postArray = [] 
         !loading && this.props.posts.map((p) => 
             p.id === this.props.postId && postArray.push(p))
@@ -25,13 +24,12 @@ class PostDetail extends Component {
             
     }
     render() {
-        // console.log(this.props) 
-        const { loading } = this.props
-        let postArray = [] 
-        !loading && this.props.posts.map((p) => 
-            p.id === this.props.postId && postArray.push(p))
-        const post = postArray[0]
         const { posts, comments, postId } = this.props   
+        const loading = Object.values(posts).length === undefined
+        let postArray = [] 
+        !loading && Object.values(posts).map((p) => 
+            p.id === postId && postArray.push(p))
+        const post = postArray[0]
         return (
             <div>
                 <h1>Post Details</h1>
@@ -65,10 +63,14 @@ class PostDetail extends Component {
                             <button>Downvote</button> <br />
                             <button>Edit</button> <br />
                             <button>Delete</button> <br />
+                            <button>Add a Comment</button> <br/>
                         </li>
                     ))
                 ) : (
-                    <h5 key={post.id}>No Comments</h5>
+                    <div>
+                        <h5 key={post.id}>No Comments</h5>
+                        <button>Add a Comment</button> <br/>
+                    </div>
                 )}
             </div>
                 }

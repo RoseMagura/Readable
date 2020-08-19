@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handlePosting } from '../actions/shared';
 
+export const generateUID = () => {
+    return Math.random().toString(36).substring(2, 15) 
+    + Math.random().toString(36).substring(2, 15)
+}
+
 class CreatePost extends Component {
     state = {
         author: '',
         body: '',
         category: '',
         title: '',
-        toHome: false,
     }
-// TODO: FIX THIS ISSUE WITH CALLING THE FUNCTION
-//    generateUID () {
-//         return Math.random().toString(36).substring(2, 15) 
-//         + Math.random().toString(36).substring(2, 15)
-//     }
+
     makeForm () {
         return (
             <form onSubmit={this.handleSubmit}>
@@ -70,7 +70,7 @@ class CreatePost extends Component {
         const { dispatch } = this.props;
         const timestamp = Date.now();
         // generate unique ID
-        const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+        const id = generateUID()
         dispatch(handlePosting(id, timestamp, title, body, author, category))
         this.props.history.push('/')
     }

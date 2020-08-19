@@ -9,17 +9,73 @@ export const deletePost = (e, dispatch) => {
     const result = window.confirm(`Are you sure you want to delete the post ${e.target.name}?`)
     result && dispatch(handleDeletePost(e.target.id))
 }
+
+export const editPost = (e, dispatch) => {
+    console.log('editing', e.target.id)
+}
+
+export const votePost = (e, dispatch) => {
+    console.log('voting on', e.target.id)
+}
+
 class PostList extends Component {
+    state = {
+        selectedOption: ''
+    }
+    handleOptionChange = (e) => {
+        this.setState({selectedOption: e.target.value})
+    }
+    sortByDate = (posts) => {
+        console.log(posts.sort((a, b) => b.timestamp - a.timestamp))
+    }
+    sortByScore = (posts) => {
+        console.log(posts.sort((a, b) => b.voteScore - a.voteScore))
+    }
+    sorting = (state) => {
+           return(<div>
+                <h3>Sort by:</h3>
+                <form>
+                    <label>Date</label>
+                    <input 
+                        type='radio' 
+                        name='date' 
+                        value='date'
+                        checked={this.state.selectedOption === 'date'}
+                        onChange={(e) => this.handleOptionChange(e)}></input>
+                    <label>Score</label>
+                    <input 
+                        type='radio' 
+                        name='score' 
+                        value='score'
+                        checked={this.state.selectedOption === 'score'}
+                        onChange={(e) => this.handleOptionChange(e)}></input>
+                </form>
+            </div>
+    )
+    }
+    handleSorting = (posts) => {
+        switch(this.state.selectedOption) {
+            case 'date':
+                this.sortByDate(posts)
+                break;
+            case 'score':
+                this.sortByScore(posts)
+                break;
+            default:
+                console.log('no sort')
+        }
+    }
+
     render() {
         const { posts } = this.props
         let loading = Object.values(posts).length === 0
-        // console.log('posts', posts)
-        // console.log('loading?', loading)
-
+        
         return (
             <div>
             <h2>Posts</h2>
-            {!loading && Object.values(posts).map((post) => 
+            {this.sorting()}
+            {this.handleSorting(posts)}
+            {!loading && posts.map((post) => 
             (<li key={post.id}>
                 {post.category}<br/>
                 <Link to={`/posts/${post.id}`}>{post.title}</Link><br/>
@@ -30,7 +86,11 @@ class PostList extends Component {
                 <button>Upvote</button>
                 <button>Downvote</button> <br/>
                 {post.commentCount} comments <br/>
-                <button>Edit</button> <br/>
+                <button id={`${post.id}`}
+                            name={`${post.title}`}
+                            onClick={(e) => {
+                                editPost(e, this.props.dispatch);
+                            }}>Edit</button> <br/>
                 <button 
                     id={`${post.id}`}
                     name={`${post.title}`}

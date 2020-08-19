@@ -1,5 +1,7 @@
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS';
 export const ADD_POST = 'ADD_POST';
+export const EDIT_POST = 'EDIT_POST';
+export const VOTE_ON_POST = 'VOTE_ON_POST';
 export const REMOVE_POST = 'REMOVE_POST';
 
 export function receivePosts (posts) {
@@ -24,6 +26,24 @@ export function addPost (id, timestamp, title, body, author,
             deleted, 
             commentCount
     }
+    }
+}
+
+export function editPost (id, title, body) {
+    return {
+        type: EDIT_POST,
+        id,
+        title,
+        body
+    }
+}
+
+export function voteOnPost (id, option) {
+    return {
+        type: VOTE_ON_POST,
+        // might not need id?
+        id, 
+        option
     }
 }
 

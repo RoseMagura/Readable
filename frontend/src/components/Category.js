@@ -1,30 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleGetComments } from '../actions/shared';
+import { handleGetComments, handleGetCatgoryPosts } from '../actions/shared';
 import { convertUnix } from './PostDetail';
-import { deletePost } from './PostList';
+import { deletePost, editPost, votePost } from './PostList';
+import PostList from './PostList';
 
 class Category extends Component {
     componentDidMount() {
-        const { loading } = this.props;
-        !loading &&
-            this.props.posts.map((p) =>
-                this.props.dispatch(handleGetComments(p.id))
-            );
+        const { loading, categoryId, dispatch } = this.props;
+        dispatch(handleGetCatgoryPosts(categoryId))
+
+        // !loading &&
+        //     this.props.posts.map((p) =>
+        //         this.props.dispatch(handleGetComments(p.id))
+        //     );
     }
     linkToNewPost = () => {
         this.props.history.push('/posts/create');
     };
     render() {
-        const { categoryId, posts, comments, loading } = this.props;
-        console.log('posts', posts);
+        const { categoryId, comments, loading } = this.props;
+        // console.log('posts', posts);
         const formattedTitle =
             categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
         let topicPosts = [];
-        posts.length !== undefined &&
-            posts.map(
-                (post) => post.category === categoryId && topicPosts.push(post)
-            );
+        // posts.length !== undefined &&
+        //     posts.map(
+        //         (post) => post.category === categoryId && topicPosts.push(post)
+        //     );
         let totalComments = 0;
         topicPosts.map((p) => (totalComments += p.commentCount));
         return (
@@ -51,12 +54,26 @@ class Category extends Component {
                                 <button>Upvote</button>
                                 <button>Downvote</button> <br />
                                 {post.commentCount} comments <br />
-                                <button>Edit</button> <br />
                                 <button
-                                id={`${post.id}`}
-                                name={`${post.title}`}
-                                onClick={(e) => deletePost(e, this.props.dispatch)}
-                                >Delete</button> <br />
+                                    id={`${post.id}`}
+                                    name={`${post.title}`}
+                                    onClick={(e) => {
+                                        editPost(e, this.props.dispatch);
+                                    }}
+                                >
+                                    Edit
+                                </button>{' '}
+                                <br />
+                                <button
+                                    id={`${post.id}`}
+                                    name={`${post.title}`}
+                                    onClick={(e) =>
+                                        deletePost(e, this.props.dispatch)
+                                    }
+                                >
+                                    Delete
+                                </button>{' '}
+                                <br />
                             </li>
                         ))
                     )}
@@ -66,16 +83,14 @@ class Category extends Component {
                         New Post
                     </button>
                 </div>
-                <div>
+                {/* <div>
                     <h4>Comments</h4>
-                    {totalComments === 0 && 
-                    (
+                    {totalComments === 0 && (
                         <div>
                             <h5>No Comments</h5>
-                            <button id='add'>Add a Comment</button> <br />
+                            <button id="add">Add a Comment</button> <br />
                         </div>
-                    )
-                     }
+                    )}
                     <div>
                         {!loading && topicPosts.length !== 0 && (
                             <ul>
@@ -110,14 +125,13 @@ class Category extends Component {
                                             )
                                         )
                                 )}
-                                {/* add a button to add comment after looping 
-                            through comments */}
-                                {totalComments!== 0 && 
-                                <button>Add a Comment</button>}
+                                {totalComments !== 0 && (
+                                    <button>Add a Comment</button>
+                                )}
                             </ul>
                         )}
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }

@@ -5,6 +5,8 @@ import PostList from './components/PostList';
 import PostDetail from './components/PostDetail';
 import CreatePost from './components/CreatePost';
 import EditPost from './components/EditPost';
+import CreateComment from './components/CreateComment';
+import EditComment from './components/EditComment';
 import Category from './components/Category';
 import {
     BrowserRouter as Router,
@@ -52,7 +54,7 @@ class App extends Component {
                                     history={props.history}/>  
                             )}
                         />
-                        <Route exact path='/posts/edit'>
+                        <Route exact path='/posts/:postId/edit'>
                             <EditPost />
                         </Route>
                         <Route exact path='/posts/:postId'
@@ -62,7 +64,17 @@ class App extends Component {
                                     posts={props.posts}
                                     history={props.history}/>  
                             )}
-                        />  
+                        />
+                        <Route 
+                            exact path='/comments/create'
+                            component={(props) => (
+                                <CreateComment 
+                                    history={props.history}/>  
+                            )}
+                        />
+                        <Route exact path='/comments/:commentId/edit'>
+                            <EditComment />
+                        </Route>  
                         <Route>
                             <NoMatchPage />
                         </Route>

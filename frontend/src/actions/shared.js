@@ -1,13 +1,15 @@
 import { receiveCategories } from './categories';
-import { receivePosts, addPost, removePost } from './posts';
+import { receivePosts, receiveCategoryPosts, addPost, removePost } from './posts';
 import { 
     getAllCategories,
     getAllPosts,
     getCommentsForPost, 
+    getCategoryPosts,
     postNewPost,
-    deletePost
+    deletePost,
+    deleteComment
 } from '../API';
-import { receiveComments } from './comments';
+import { receiveComments, removeComment } from './comments';
 
 export function handleGetCategories () {
     return (dispatch) => {
@@ -24,6 +26,15 @@ export function handleGetAllPosts () {
             .then((posts) => {
                 dispatch(receivePosts(posts))
             })
+    }
+}
+
+export function handleGetCatgoryPosts (category) {
+    return (dispatch) => {
+        return getCategoryPosts(category)
+            // .then((posts) => {
+            //     dispatch(receiveCategoryPosts(posts))
+            // })
     }
 }
 
@@ -60,6 +71,17 @@ export function handleDeletePost (id) {
         try {
             await deletePost
             dispatch(removePost(id))}
+        catch(error) {
+            console.log(error);
+        }
+        return 'done';
+}}
+
+export function handleDeleteComment (id) {
+    return async dispatch => {
+        try {
+            await deleteComment
+            dispatch(removeComment(id))}
         catch(error) {
             console.log(error);
         }

@@ -1,5 +1,5 @@
 import { receiveCategories } from './categories';
-import { receivePosts, receiveCategoryPosts, addPost, removePost } from './posts';
+import { receivePosts, addPost, removePost, receiveCategoryPosts } from './posts';
 import { 
     getAllCategories,
     getAllPosts,
@@ -29,12 +29,16 @@ export function handleGetAllPosts () {
     }
 }
 
-export function handleGetCatgoryPosts (category) {
+export function handleGetCatgoryInfo (category) {
     return (dispatch) => {
         return getCategoryPosts(category)
-            // .then((posts) => {
-            //     dispatch(receiveCategoryPosts(posts))
-            // })
+            .then((posts) => {
+                dispatch(receiveCategoryPosts(posts))
+                posts.map((post) => getCommentsForPost(post.id)
+                .then((comments) => {
+                    dispatch(receiveComments(comments))
+                }))
+            })
     }
 }
 

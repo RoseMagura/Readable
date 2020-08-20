@@ -1,44 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleGetComments, handleGetCatgoryPosts } from '../actions/shared';
+import { handleGetCatgoryInfo } from '../actions/shared';
 import { convertUnix } from './PostDetail';
 import { deletePost, editPost, votePost } from './PostList';
-import PostList from './PostList';
 
 class Category extends Component {
     componentDidMount() {
-        const { loading, categoryId, dispatch } = this.props;
-        dispatch(handleGetCatgoryPosts(categoryId))
-
-        // !loading &&
-        //     this.props.posts.map((p) =>
-        //         this.props.dispatch(handleGetComments(p.id))
-        //     );
+        const { categoryId, dispatch } = this.props;
+        dispatch(handleGetCatgoryInfo(categoryId));
     }
     linkToNewPost = () => {
         this.props.history.push('/posts/create');
     };
-    render() {
-        const { categoryId, comments, loading } = this.props;
-        // console.log('posts', posts);
-        const formattedTitle =
-            categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
-        let topicPosts = [];
-        // posts.length !== undefined &&
-        //     posts.map(
-        //         (post) => post.category === categoryId && topicPosts.push(post)
-        //     );
-        let totalComments = 0;
-        topicPosts.map((p) => (totalComments += p.commentCount));
-        return (
-            <div>
-                <h3>{formattedTitle}</h3>
-                <div>
-                    <h4>Posts</h4>
-                    {topicPosts.length === 0 ? (
-                        <h5>No Posts</h5>
-                    ) : (
-                        topicPosts.map((post) => (
+    renderSwitch(param) {
+        switch (param.length) {
+            case 0:
+                return <h5>No Posts</h5>;
+            default:
+                return (
+                    <div>
+                        {param.map((post) => (
                             <li key={post.id}>
                                 {post.category}
                                 <br />
@@ -75,15 +56,35 @@ class Category extends Component {
                                 </button>{' '}
                                 <br />
                             </li>
-                        ))
-                    )}
+                        ))}
+                    </div>
+                );
+        }
+    }
+    render() {
+        const { categoryId, posts, comments } = this.props;
+        let loading = posts.length === undefined;
+        const formattedTitle =
+            categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
+        let totalComments = 0;
+        !loading
+            ? posts.length === 1
+                ? (totalComments = posts[0].commentCount)
+                : posts.map((p) => (totalComments += p.commentCount))
+            : console.log('loading');
+        return (
+            <div>
+                <h3>{formattedTitle}</h3>
+                <div>
+                    <h4>Posts</h4>
+                    {!loading && this.renderSwitch(posts)}
                 </div>
                 <div>
                     <button type="button" onClick={this.linkToNewPost}>
                         New Post
                     </button>
                 </div>
-                {/* <div>
+                <div>
                     <h4>Comments</h4>
                     {totalComments === 0 && (
                         <div>
@@ -92,46 +93,33 @@ class Category extends Component {
                         </div>
                     )}
                     <div>
-                        {!loading && topicPosts.length !== 0 && (
+                        {!loading && comments.length > 0 && (
                             <ul>
-                                {topicPosts.map(
-                                    (post) =>
-                                        post.commentCount > 0 &&
-                                        comments[`${post.id}`] !== undefined &&
-                                        comments[`${post.id}`].map(
-                                            (comment) => (
-                                                // console.log(comment)
-                                                <li key={comment.id}>
-                                                    {comment.author} <br />
-                                                    responding to '{post.title}'
-                                                    <br />
-                                                    at{' '}
-                                                    {convertUnix(
-                                                        comment.timestamp
-                                                    )}
-                                                    <br />
-                                                    {comment.body}
-                                                    <br />
-                                                    {comment.voteScore} votes
-                                                    <button>Upvote</button>
-                                                    <button>
-                                                        Downvote
-                                                    </button>{' '}
-                                                    <br />
-                                                    <button>Edit</button> <br />
-                                                    <button>Delete</button>{' '}
-                                                    <br />
-                                                </li>
-                                            )
-                                        )
-                                )}
+                                {
+                                    comments.map((comment) => (
+                                        <li key={comment.id}>
+                                            {comment.author} <br />
+                                            {/* responding to '{comment.parentId}'
+                                            <br /> */}
+                                            at {convertUnix(comment.timestamp)}
+                                            <br />
+                                            {comment.body}
+                                            <br />
+                                            {comment.voteScore} votes
+                                            <button>Upvote</button>
+                                            <button>Downvote</button> <br />
+                                            <button>Edit</button> <br />
+                                            <button>Delete</button> <br />
+                                        </li>
+                                    ))
+                                }
                                 {totalComments !== 0 && (
                                     <button>Add a Comment</button>
                                 )}
                             </ul>
                         )}
                     </div>
-                </div> */}
+                </div>
             </div>
         );
     }

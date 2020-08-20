@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import CategoryList from './CategoryList';
 import PostList from './PostList';
 import { connect } from 'react-redux';
+import { handleGetAllPosts, handleGetCategories } from '../actions/shared';
 
 class Homepage extends Component {
+    componentDidMount () {
+        this.props.dispatch(handleGetCategories());
+        this.props.dispatch(handleGetAllPosts())
+    }
     linkToNewPost = () => {
         this.props.history.push('/posts/create');
     }

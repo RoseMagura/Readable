@@ -3,7 +3,8 @@ import {
     ADD_POST, 
     REMOVE_POST,
     VOTE_ON_POST,
-    EDIT_POST 
+    EDIT_POST,
+    RECEIVE_POSTS_FOR_CATEGORY
 } from '../actions/posts';
 
 export default function posts (state = {}, action){
@@ -18,6 +19,8 @@ export default function posts (state = {}, action){
             return state
         case EDIT_POST : 
             return state    
+        case RECEIVE_POSTS_FOR_CATEGORY :
+            return action.posts
         default:
             return state
     }

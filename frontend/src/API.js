@@ -76,7 +76,7 @@ export const deletePost = (id) =>
 
 export const getCommentsForPost = (id) =>
     fetch(`${api}/posts/${id}/comments`, { headers })
-    .then(res => res.json())
+    .then(res => res.json()).then(data => data)
 
 export const postComment = (id, timestamp, body, author, parentId) =>
     fetch(`${api}/comments`, {

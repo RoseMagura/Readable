@@ -9,8 +9,9 @@ import {
 export default function comments(state = {}, action, commentDict = {}) {
     switch (action.type) {
         case RECEIVE_COMMENTS:
-            commentDict[action.comments[0].parentId] = action.comments;
-            return commentDict;
+            // commentDict[action.comments[0].parentId] = action.comments;
+            // return commentDict;
+            return action.comments
         case CREATE_COMMENT:
             return state;
         case EDIT_COMMENT:

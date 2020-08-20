@@ -3,6 +3,7 @@ export const ADD_POST = 'ADD_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const VOTE_ON_POST = 'VOTE_ON_POST';
 export const REMOVE_POST = 'REMOVE_POST';
+export const RECEIVE_POSTS_FOR_CATEGORY = 'RECEIVE_POSTS_FOR_CATEGORY' 
 
 export function receivePosts (posts) {
     return {
@@ -51,5 +52,12 @@ export function removePost (id) {
     return{
         type: REMOVE_POST,
         id
+    }
+}
+
+export function receiveCategoryPosts (posts) {
+    return {
+        type: RECEIVE_POSTS_FOR_CATEGORY,
+        posts
     }
 }

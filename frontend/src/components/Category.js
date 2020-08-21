@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleGetCatgoryInfo } from '../actions/shared';
-import { convertUnix } from './PostDetail';
+import { convertUnix, displayComments } from './PostDetail';
 import { deletePost, editPost, votePost } from './PostList';
+import { Link } from 'react-router-dom';
 
 class Category extends Component {
     componentDidMount() {
@@ -89,32 +90,17 @@ class Category extends Component {
                     {totalComments === 0 && (
                         <div>
                             <h5>No Comments</h5>
-                            <button id="add">Add a Comment</button> <br />
+                            <Link to={`/comments/create`}>
+                                <button>Add a Comment</button></Link>
                         </div>
                     )}
                     <div>
                         {!loading && comments.length > 0 && (
                             <ul>
-                                {
-                                    comments.map((comment) => (
-                                        <li key={comment.id}>
-                                            {comment.author} <br />
-                                            {/* responding to '{comment.parentId}'
-                                            <br /> */}
-                                            at {convertUnix(comment.timestamp)}
-                                            <br />
-                                            {comment.body}
-                                            <br />
-                                            {comment.voteScore} votes
-                                            <button>Upvote</button>
-                                            <button>Downvote</button> <br />
-                                            <button>Edit</button> <br />
-                                            <button>Delete</button> <br />
-                                        </li>
-                                    ))
+                                {displayComments(comments, this.props.dispatch)
                                 }
                                 {totalComments !== 0 && (
-                                    <button>Add a Comment</button>
+                                    <Link to={`/comments/create`}><button>Add a Comment</button></Link>
                                 )}
                             </ul>
                         )}

@@ -90,6 +90,7 @@ export const postComment = (id, timestamp, body, author, parentId) =>
             'parentId': parentId
         })})
         .then(res => res.json())
+        .then(data => data)
 
 export const getCommentDetails = (id) =>
     fetch(`${api}/comments/${id}`, { headers })

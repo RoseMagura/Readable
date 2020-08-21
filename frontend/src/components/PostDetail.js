@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleGetComments, handleDeleteComment } from '../actions/shared';
 import { deletePost, editPost, votePost } from './PostList';
+import { Link } from 'react-router-dom';
 
 export const deleteComment = (e, dispatch) => {
     e.preventDefault();
@@ -10,6 +11,32 @@ export const deleteComment = (e, dispatch) => {
     );
     result && dispatch(handleDeleteComment(e.target.id));
 };
+
+export const displayComments = (comments, dispatch) =>
+    comments.map((comment) => (
+        <li key={comment.id}>
+            {comment.author} <br />
+            {/* responding to '{post.title}'<br /> */}
+            at {convertUnix(comment.timestamp)}
+            <br />
+            <Link to={`/comments/${comment.id}`}>{comment.body}</Link>
+            <br />
+            {comment.voteScore} votes
+            <button>Upvote</button>
+            <button>Downvote</button> <br />
+            <button>Edit</button> <br />
+            <button
+                id={`${comment.id}`}
+                name={`${comment.body}`}
+                onClick={(e) => {
+                    deleteComment(e, dispatch);
+                }}
+            >
+                Delete
+            </button>{' '}
+            <br />
+        </li>
+    ));
 
 export const convertUnix = (timestamp) => {
     const date = new Date(timestamp);
@@ -84,42 +111,23 @@ class PostDetail extends Component {
                         <h2>Comments</h2>
                         {post.commentCount > 0 ? (
                             <ul>
-                                {comments[`${post.id}`] !== undefined &&
-                                    comments[`${post.id}`].map((comment) => (
-                                        <li key={comment.id}>
-                                            {comment.author} <br />
-                                            responding to '{post.title}'<br />
-                                            at {convertUnix(comment.timestamp)}
-                                            <br />
-                                            {comment.body}
-                                            <br />
-                                            {comment.voteScore} votes
-                                            <button>Upvote</button>
-                                            <button>Downvote</button> <br />
-                                            <button>Edit</button> <br />
-                                            <button
-                                                id={`${comment.id}`}
-                                                name={`${comment.body}`}
-                                                onClick={(e) => {
-                                                    deleteComment(
-                                                        e,
-                                                        this.props.dispatch
-                                                    );
-                                                }}
-                                            >
-                                                Delete
-                                            </button>{' '}
-                                            <br />
-                                        </li>
-                                    ))}
+                                {comments.length !== undefined &&
+                                    displayComments(
+                                        comments,
+                                        this.props.dispatch
+                                    )}
                                 {/* add a button to add comment after looping 
                             through comments */}
-                                <button>Add a Comment</button>
+                                <Link to={'/comments/create'}>
+                                    <button>Add a Comment</button>
+                                </Link>
                             </ul>
                         ) : (
                             <div>
                                 <h5 key={post.id}>No Comments</h5>
-                                <button>Add a Comment</button> <br />
+                                <Link to={'/comments/create'}>
+                                    <button>Add a Comment</button>
+                                </Link>
                             </div>
                         )}
                     </div>

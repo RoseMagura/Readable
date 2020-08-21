@@ -7,9 +7,15 @@ import {
     getCategoryPosts,
     postNewPost,
     deletePost,
-    deleteComment
+    deleteComment,
+    getCommentDetails,
+    postComment
 } from '../API';
-import { receiveComments, removeComment } from './comments';
+import { 
+    receiveComments, 
+    getCommentInfo, 
+    removeComment,
+    createComment } from './comments';
 
 export function handleGetCategories () {
     return (dispatch) => {
@@ -70,6 +76,26 @@ export function handlePosting (id, timestamp, title, body, author, category) {
         return 'done';
 }}
 
+export function handleCommenting (id, timestamp, body, author, parentId) {
+    return async dispatch => {
+        try{
+            const res =  await postComment(id, timestamp, body, author, 
+                parentId)
+            console.log(res)
+            const resArray = Object.values(res)
+            const voteScore = resArray[0];
+            const deleted = resArray[1];
+            const parentDeleted = resArray[2];
+            dispatch(createComment(id, timestamp, body, author, 
+               voteScore, deleted, parentDeleted, parentId ))
+        } 
+        catch(error) {
+            console.log(error);
+        }
+        return 'done';
+}}
+
+
 export function handleDeletePost (id) {
     return async dispatch => {
         try {
@@ -91,3 +117,10 @@ export function handleDeleteComment (id) {
         }
         return 'done';
 }}
+
+export function handleGetCommentInfo (id) {
+    return dispatch => {
+        return getCommentDetails(id)
+        .then(res => dispatch(getCommentInfo(res)))
+    }
+}

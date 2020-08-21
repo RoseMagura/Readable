@@ -7,6 +7,7 @@ import CreatePost from './components/CreatePost';
 import EditPost from './components/EditPost';
 import CreateComment from './components/CreateComment';
 import EditComment from './components/EditComment';
+import CommentDetail from './components/CommentDetail';
 import Category from './components/Category';
 import {
     BrowserRouter as Router,
@@ -67,6 +68,12 @@ class App extends Component {
                                     history={props.history}/>  
                             )}
                         />
+                        <Route exact path='/comments/:commentId'
+                            component={(props)=> (
+                            <CommentDetail
+                                commentId={props.match.params.commentId} 
+                                history={props.history}/>
+                            )}/>  
                         <Route exact path='/comments/:commentId/edit'>
                             <EditComment />
                         </Route>  

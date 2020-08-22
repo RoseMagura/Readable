@@ -1,4 +1,7 @@
-import { receiveCategories, receiveCategoryPosts } from './categories';
+import { 
+    receiveCategories, 
+    receiveCategoryPosts,
+    updateCategory } from './categories';
 import { receivePosts, addPost, removePost,  deleteCommentFromPost } from './posts';
 import { 
     getAllCategories,
@@ -16,6 +19,7 @@ import {
     getCommentInfo, 
     removeComment,
     createComment } from './comments';
+import { findIndex } from '../components/Category';
 
 export function handleGetCategories () {
     return (dispatch) => {
@@ -69,6 +73,10 @@ export function handlePosting (id, timestamp, title, body, author, category) {
             const commentCount = resArray[2];
             dispatch(addPost(id, timestamp, title, body, author, 
                 category, voteScore, deleted, commentCount ))
+            //update this part with index
+            let index = findIndex(category)
+            dispatch(updateCategory(id, timestamp, title, body, author, 
+                category, voteScore, deleted, commentCount, index ))
         } 
         catch(error) {
             console.log(error);

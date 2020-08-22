@@ -5,23 +5,25 @@ import { convertUnix, displayComments } from './PostDetail';
 import { deletePost, editPost, votePost } from './PostList';
 import { Link } from 'react-router-dom';
 
+export const findIndex = (categoryId) => {
+    let index;
+        switch(categoryId){
+            case 'react':
+                return index = 0;
+            case 'redux':
+                return index = 1;
+            case 'udacity':
+                return index = 2;
+            default:
+                return index = 0
+        }
+    }
+
 class Category extends Component {
     componentDidMount() {
         const { categoryId, dispatch } = this.props;
-        // is this inefficient?
-        switch(categoryId){
-            case 'react':
-                dispatch(handleGetCatgoryInfo(0, categoryId));
-                break;
-            case 'redux':
-                dispatch(handleGetCatgoryInfo(1, categoryId));
-                break;
-            case 'udacity':
-                dispatch(handleGetCatgoryInfo(2, categoryId));
-                break;
-            default: 
-                return 'no category'
-        }
+        const index = findIndex(categoryId);
+        dispatch(handleGetCatgoryInfo(index, categoryId))
     }
     linkToNewPost = () => {
         this.props.history.push('/posts/create');
@@ -77,21 +79,7 @@ class Category extends Component {
     }
     render() {
         const { categoryId, categories, comments } = this.props;
-        let index = 0;
-        switch(categoryId){
-            case 'react':
-                index = 0;
-                break;
-            case 'redux':
-                index = 1;
-                break;
-            case 'udacity':
-                index = 2;
-                break;
-            default:
-                index = 0
-                break;
-        }
+        const index = findIndex(categoryId)
         let loading = categories[index].posts === undefined;
         // console.log('loading', loading)
         const formattedTitle =

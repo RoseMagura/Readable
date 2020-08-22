@@ -11,8 +11,8 @@ import {
 export default function posts (state = {}, action){
     switch (action.type) {
         case RECEIVE_ALL_POSTS :
-            return action.posts.filter((post) => post.id !== undefined)
-            // return [...action.posts]
+            // return action.posts.filter((post) => post.id !== undefined)
+            return [...action.posts]
         case ADD_POST :
             return [...state.concat(action.post)] 
         case REMOVE_POST :

@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
-import { handleGetCategories } from '../actions/shared';
+// import { handleGetCategories } from '../actions/shared';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class CategoryList extends Component {
     render() {
-        let loading = this.props.categories.length === undefined
         const { categories } = this.props
+        let loading = Object.keys(categories).length === undefined
         return (
             <div>
             <h2>Categories</h2>
             {
-                !loading && categories.map((category) => 
+                !loading && Object.values(categories).map((category) => 
                 <li key={category.name}>
                     <Link to={{
                         pathname: `/category/${category.path}`
                         }}>
                         {category.name}
                     </Link>
-                </li>)
+                </li>
+                )
             }
             </div>
         )

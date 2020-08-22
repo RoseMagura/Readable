@@ -15,6 +15,7 @@ import {
     Route,
   } from "react-router-dom";
 import { connect } from 'react-redux';
+import { handleGetAllPosts, handleGetCategories } from './actions/shared';
 
 const NoMatchPage = () => {
     return(
@@ -23,6 +24,10 @@ const NoMatchPage = () => {
 }    
 
 class App extends Component {
+    componentDidMount () {
+        this.props.dispatch(handleGetCategories());
+        this.props.dispatch(handleGetAllPosts())
+    }
     render(){
         return (
                 <Router>

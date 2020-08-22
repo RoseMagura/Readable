@@ -10,9 +10,9 @@ class CreateComment extends Component {
         category: '',
         parentId: '',
     }
-    componentDidMount () {
+    // componentDidMount () {
         
-    }
+    // }
     makeForm () {
         return (
             <form onSubmit={this.handleSubmit}>
@@ -39,7 +39,7 @@ class CreateComment extends Component {
                     defaultValue={'Pick a post'}
                     onChange={this.handleChange} >
                     <option value='Pick a post'>Pick a post</option>
-                    {this.props.posts.map((post) => 
+                    {this.props.posts.length !== undefined && this.props.posts.map((post) => 
                         <option value={post.id} key={post.id}>
                             {post.title}</option>)}
                 </select>
@@ -61,12 +61,10 @@ class CreateComment extends Component {
         const timestamp = Date.now();
         // generate unique ID
         const id = generateUID()
-        // let parentId = ''
         dispatch(handleCommenting(id, timestamp, body, author, parentId))
         this.props.history.push('/')
     }
     render() {
-        // console.log(this.state)
         return (
             <div>
                 <h1>Create Comment</h1>

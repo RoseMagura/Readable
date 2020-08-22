@@ -8,7 +8,20 @@ import { Link } from 'react-router-dom';
 class Category extends Component {
     componentDidMount() {
         const { categoryId, dispatch } = this.props;
-        dispatch(handleGetCatgoryInfo(categoryId));
+        // is this inefficient?
+        switch(categoryId){
+            case 'react':
+                dispatch(handleGetCatgoryInfo(0, categoryId));
+                break;
+            case 'redux':
+                dispatch(handleGetCatgoryInfo(1, categoryId));
+                break;
+            case 'udacity':
+                dispatch(handleGetCatgoryInfo(2, categoryId));
+                break;
+            default: 
+                return 'no category'
+        }
     }
     linkToNewPost = () => {
         this.props.history.push('/posts/create');
@@ -63,22 +76,37 @@ class Category extends Component {
         }
     }
     render() {
-        const { categoryId, posts, comments } = this.props;
-        let loading = posts.length === undefined;
+        const { categoryId, categories, comments } = this.props;
+        let index = 0;
+        switch(categoryId){
+            case 'react':
+                index = 0;
+                break;
+            case 'redux':
+                index = 1;
+                break;
+            case 'udacity':
+                index = 2;
+                break;
+            default:
+                index = 0
+                break;
+        }
+        let loading = categories[index].posts === undefined;
+        // console.log('loading', loading)
         const formattedTitle =
             categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
         let totalComments = 0;
         !loading
-            ? posts.length === 1
-                ? (totalComments = posts[0].commentCount)
-                : posts.map((p) => (totalComments += p.commentCount))
-            : console.log('loading');
+                && categories[index].posts.map(
+                    (p) => (totalComments += p.commentCount))
+            
         return (
             <div>
                 <h3>{formattedTitle}</h3>
                 <div>
                     <h4>Posts</h4>
-                    {!loading && this.renderSwitch(posts)}
+                    {!loading && this.renderSwitch(categories[index].posts)}
                 </div>
                 <div>
                     <button type="button" onClick={this.linkToNewPost}>
@@ -111,12 +139,12 @@ class Category extends Component {
     }
 }
 
-function mapStateToProps({ posts, comments, dispatch }) {
+function mapStateToProps({ categories, comments, dispatch }) {
     return {
-        posts,
+        categories,
         comments,
         dispatch,
-        loading: posts.length === undefined,
+        // loading: categories.posts.length === undefined,
     };
 }
 export default connect(mapStateToProps)(Category);

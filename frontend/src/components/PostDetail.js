@@ -9,7 +9,8 @@ export const deleteComment = (e, dispatch) => {
     const result = window.confirm(
         `Are you sure you want to delete the comment ${e.target.name}?`
     );
-    result && dispatch(handleDeleteComment(e.target.id));
+    console.log('from delete comment', e.target.parentid)
+    // result && dispatch(handleDeleteComment(e.target.id));
 };
 
 export const displayComments = (comments, dispatch) =>
@@ -28,6 +29,7 @@ export const displayComments = (comments, dispatch) =>
             <button
                 id={`${comment.id}`}
                 name={`${comment.body}`}
+                parentid={`${comment.parentId}`}
                 onClick={(e) => {
                     deleteComment(e, dispatch);
                 }}

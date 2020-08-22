@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import CategoryList from './CategoryList';
 import PostList from './PostList';
+// import CommentList from './CommentList';
 import { connect } from 'react-redux';
-import { handleGetAllPosts, handleGetCategories } from '../actions/shared';
+// import { handleGetAllPosts, handleGetCategories } from '../actions/shared';
+import { Link } from 'react-router-dom';
 
 class Homepage extends Component {
     componentDidMount () {
-        this.props.dispatch(handleGetCategories());
-        this.props.dispatch(handleGetAllPosts())
-    }
-    linkToNewPost = () => {
-        this.props.history.push('/posts/create');
+        // this.props.dispatch(handleGetCategories());
+        // this.props.dispatch(handleGetAllPosts())
     }
     render() {
         return (
@@ -18,11 +17,14 @@ class Homepage extends Component {
                 <h1>Homepage</h1>
                 <CategoryList/>
                 <PostList />
+                <Link to='/posts/create'><button type='button'>
+                    New Post
+                </button></Link>
                 {/* should root include comments? Maybe not? */}
                 {/* <CommentList /> */}
-                <button type='button' onClick={this.linkToNewPost}>
-                    New Post
-                </button>
+                <Link to='/comments/create'><button type='button'>
+                    New Comment
+                </button></Link>
             </div>
         )
     }

@@ -1,5 +1,5 @@
-import { receiveCategories } from './categories';
-import { receivePosts, addPost, removePost, receiveCategoryPosts } from './posts';
+import { receiveCategories, receiveCategoryPosts } from './categories';
+import { receivePosts, addPost, removePost,  deleteCommentFromPost } from './posts';
 import { 
     getAllCategories,
     getAllPosts,
@@ -35,11 +35,11 @@ export function handleGetAllPosts () {
     }
 }
 
-export function handleGetCatgoryInfo (category) {
+export function handleGetCatgoryInfo (index, category) {
     return (dispatch) => {
         return getCategoryPosts(category)
             .then((posts) => {
-                dispatch(receiveCategoryPosts(posts))
+                dispatch(receiveCategoryPosts(index, category, posts))
                 posts.map((post) => getCommentsForPost(post.id)
                 .then((comments) => {
                     dispatch(receiveComments(comments))
@@ -81,7 +81,6 @@ export function handleCommenting (id, timestamp, body, author, parentId) {
         try{
             const res =  await postComment(id, timestamp, body, author, 
                 parentId)
-            console.log(res)
             const resArray = Object.values(res)
             const voteScore = resArray[0];
             const deleted = resArray[1];
@@ -107,11 +106,12 @@ export function handleDeletePost (id) {
         return 'done';
 }}
 
-export function handleDeleteComment (id) {
+export function handleDeleteComment (commentId, parentId) {
     return async dispatch => {
         try {
             await deleteComment
-            dispatch(removeComment(id))}
+            dispatch(removeComment(commentId))
+            dispatch(deleteCommentFromPost(parentId))}
         catch(error) {
             console.log(error);
         }

@@ -1,9 +1,17 @@
+export const RECEIVE_ALL_COMMENTS = 'RECEIVE_ALL_COMMENTS';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 export const GET_COMMENT_INFO = 'GET_COMMENT_INFO';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
+
+export function receiveAllComments (comments) {
+    return{
+        type: RECEIVE_ALL_COMMENTS,
+        comments
+    }
+}
 
 export function receiveComments(comments) {
     return {

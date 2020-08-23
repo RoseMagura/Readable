@@ -4,13 +4,13 @@ import { handleGetComments, handleDeleteComment } from '../actions/shared';
 import { deletePost, editPost, votePost } from './PostList';
 import { Link } from 'react-router-dom';
 
-export const deleteComment = (e, dispatch) => {
+export const deleteComment = (e, dispatch, parentId) => {
     e.preventDefault();
     const result = window.confirm(
         `Are you sure you want to delete the comment ${e.target.name}?`
     );
-    console.log('from delete comment', e.target.parentid)
-    // result && dispatch(handleDeleteComment(e.target.id));
+    // console.log('from delete comment', parentId)
+    result && dispatch(handleDeleteComment(e.target.id, parentId));
 };
 
 export const displayComments = (comments, dispatch) =>
@@ -29,9 +29,8 @@ export const displayComments = (comments, dispatch) =>
             <button
                 id={`${comment.id}`}
                 name={`${comment.body}`}
-                parentid={`${comment.parentId}`}
                 onClick={(e) => {
-                    deleteComment(e, dispatch);
+                    deleteComment(e, dispatch, comment.parentId);
                 }}
             >
                 Delete
@@ -51,16 +50,16 @@ export const convertUnix = (timestamp) => {
 };
 
 class PostDetail extends Component {
-    componentDidMount() {
-        const loading = this.props.posts.length === undefined;
-        let postArray = [];
-        !loading &&
-            this.props.posts.map(
-                (p) => p.id === this.props.postId && postArray.push(p)
-            );
-        const post = postArray[0];
-        !loading && this.props.dispatch(handleGetComments(post.id));
-    }
+    // componentDidMount() {
+    //     const loading = this.props.posts.length === undefined;
+    //     let postArray = [];
+    //     !loading &&
+    //         this.props.posts.map(
+    //             (p) => p.id === this.props.postId && postArray.push(p)
+    //         );
+    //     const post = postArray[0];
+    //     !loading && this.props.dispatch(handleGetComments(post.id));
+    // }
     render() {
         const { posts, comments, postId, history } = this.props;
         const loading = Object.values(posts).length === undefined;
@@ -70,6 +69,11 @@ class PostDetail extends Component {
                 (p) => p.id === postId && postArray.push(p)
             );
         const post = postArray[0];
+        let postComments =[];
+        Object.values(comments).length !== undefined &&
+        Object.values(comments).map((comment) =>
+            comment.parentId === postId && postComments.push(comment))
+
         return (
             <div>
                 <h1>Post Details</h1>
@@ -113,11 +117,18 @@ class PostDetail extends Component {
                         <h2>Comments</h2>
                         {post.commentCount > 0 ? (
                             <ul>
-                                {comments.length !== undefined &&
+                                {
+                                // Object.values(comments).length !== undefined &&
+                                // Object.values(comments).map((comment) =>
+                                //     comment.parentId === postId && JSON.stringify(comment))
+
                                     displayComments(
-                                        comments,
+                                        postComments,
                                         this.props.dispatch
                                     )}
+                                    {
+                                    JSON.stringify(postComments)
+                                    }
                                 {/* add a button to add comment after looping 
                             through comments */}
                                 <Link to={'/comments/create'}>

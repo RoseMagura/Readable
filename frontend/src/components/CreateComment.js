@@ -10,9 +10,6 @@ class CreateComment extends Component {
         category: '',
         parentId: '',
     }
-    // componentDidMount () {
-        
-    // }
     makeForm () {
         return (
             <form onSubmit={this.handleSubmit}>
@@ -61,6 +58,7 @@ class CreateComment extends Component {
         const timestamp = Date.now();
         // generate unique ID
         const id = generateUID()
+        // console.log(id, timestamp, body, author, parentId)
         dispatch(handleCommenting(id, timestamp, body, author, parentId))
         this.props.history.push('/')
     }

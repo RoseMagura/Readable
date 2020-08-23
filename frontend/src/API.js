@@ -2,7 +2,8 @@ const api = 'http://localhost:3001'
 const token = 'mySecret'
 
 const headers = { 
-    'Accept': 'application/json',
+    // 'Accept': 'application/json',
+    'Content-Type': 'application/json',
     'Authorization': token 
 }
 
@@ -16,6 +17,10 @@ export const getAllPosts = () =>
     .then(res => res.json())
     // .then(data => data.posts)
 
+export const getAllComments = () => 
+    fetch(`${api}/comments`, { headers })
+    .then(res => res.json())
+
 export const getCategoryPosts = (category) => 
     fetch(`${api}/${category}/posts`, { headers })
     .then(res => res.json()).then(data => data)
@@ -24,19 +29,10 @@ export const postNewPost = (id, timestamp, title, body, author,
     category) => (
         fetch(`http://localhost:3001/posts`, {
                 method: 'POST',
-                headers: { 
-                    'Accept': 'application/json',
-                    'Authorization': 'mysecret' 
-                },
                 body: JSON.stringify({
-                    // do these need quotes?
-                    'id': id, 
-                    'timestamp': timestamp,
-                    'title': title,
-                    'body': body,
-                    'author': author,
-                    'category': category,
-                })
+                   id, timestamp, title, body, author, category,
+                }),
+                headers
                }).then((res) => res.json())
                .then(data => data)
     )
@@ -80,17 +76,15 @@ export const getCommentsForPost = (id) =>
 
 export const postComment = (id, timestamp, body, author, parentId) =>
     fetch(`${api}/comments`, {
-        method: 'POST',
-        headers: { headers },
-        body: JSON.stringify({
-            'id': id,
-            'timestamp': timestamp,
-            'body': body,
-            'author': author,
-            'parentId': parentId
-        })})
-        .then(res => res.json())
-        .then(data => data)
+            method: 'POST', 
+            body: JSON.stringify({
+                id, timestamp, body, author, parentId
+            }),
+            headers,
+        }
+            )
+            .then(res => res.json())
+            .then(data => data)
 
 export const getCommentDetails = (id) =>
     fetch(`${api}/comments/${id}`, { headers })

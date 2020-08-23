@@ -248,6 +248,20 @@ app.get('/posts/:id/comments', (req, res) => {
       )
 })
 
+// attempting to edit server here
+app.get('/comments', (req, res) => {
+    comments.getAll(req.token, req.params.id)
+      .then(
+          (data) => res.send(data),
+          (error) => {
+              console.error(error)
+              res.status(500).send({
+                  error: 'There was an error.'
+              })
+          }
+      )
+})
+
 app.get('/comments/:id', (req, res) => {
     comments.get(req.token, req.params.id)
       .then(
@@ -275,9 +289,10 @@ app.put('/comments/:id', bodyParser.json(), (req, res) => {
 })
 
 app.post('/comments', bodyParser.json(), (req, res) => {
+    console.log('req from server.js', req.body)
     comments.add(req.token, req.body)
       .then(
-          (data) => res.send(data),
+          (data) => res.send(data) && console.log('data', data),
           (error) => {
               console.error(error)
               res.status(500).send({

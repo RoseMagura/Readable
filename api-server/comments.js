@@ -33,6 +33,12 @@ function getData (token) {
   }
   return data
 }
+function getAll (token) {
+    return new Promise((res) => {
+        let comments = getData(token)
+        res(comments)
+      })
+}
 
 function getByParent (token, parentId) {
   return new Promise((res) => {
@@ -55,9 +61,11 @@ function get (token, id) {
 }
 
 function add (token, comment) {
+    console.log('DISPLAYING from comments.js:')
+    console.log(comment)
   return new Promise((res) => {
     let comments = getData(token)
-
+    
     comments[comment.id] = {
       id: comment.id,
       timestamp: comment.timestamp,
@@ -123,6 +131,7 @@ function edit (token, id, comment) {
 
 module.exports = {
   get,
+  getAll,
   getByParent,
   add,
   vote,

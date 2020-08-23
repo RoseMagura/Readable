@@ -4,7 +4,8 @@ export const EDIT_POST = 'EDIT_POST';
 export const VOTE_ON_POST = 'VOTE_ON_POST';
 export const REMOVE_POST = 'REMOVE_POST';
 // export const RECEIVE_POSTS_FOR_CATEGORY = 'RECEIVE_POSTS_FOR_CATEGORY' 
-export const DELETE_COMMENT_FROM_POST = 'DELETE_COMMENT_FROM_POST';
+// export const DELETE_COMMENT_FROM_POST = 'DELETE_COMMENT_FROM_POST';
+export const UPDATE_POST = 'UPDATE_POST';
 
 export function receivePosts (posts) {
     return {
@@ -56,16 +57,10 @@ export function removePost (id) {
     }
 }
 
-// export function receiveCategoryPosts (posts) {
-//     return {
-//         type: RECEIVE_POSTS_FOR_CATEGORY,
-//         posts
-//     }
-// }
-
-export function deleteCommentFromPost (id) {
+export function updatePost (id, value) {
     return {
-        type: DELETE_COMMENT_FROM_POST,
-        id
+        type: UPDATE_POST,
+        id,
+        value
     }
 }

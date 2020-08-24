@@ -289,10 +289,9 @@ app.put('/comments/:id', bodyParser.json(), (req, res) => {
 })
 
 app.post('/comments', bodyParser.json(), (req, res) => {
-    console.log('req from server.js', req.body)
     comments.add(req.token, req.body)
       .then(
-          (data) => res.send(data) && console.log('data', data),
+          (data) => res.send(data),
           (error) => {
               console.error(error)
               res.status(500).send({

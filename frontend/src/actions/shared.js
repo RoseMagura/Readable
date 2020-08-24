@@ -17,14 +17,17 @@ import {
     deletePost,
     deleteComment,
     getCommentDetails,
-    postComment
+    postComment,
+    voteForPost,
+    voteForComment
 } from '../API';
 import { 
     receiveComments, 
     receiveAllComments,
     getCommentInfo, 
     removeComment,
-    createComment } from './comments';
+    createComment,
+    voteOnComment } from './comments';
 
 export function handleGetCategories () {
     return (dispatch) => {
@@ -70,15 +73,14 @@ export function handleGetComments (post) {
 export function handlePosting (id, timestamp, title, body, author, category) {
     return async dispatch => {
         try{
-            const res =  await postNewPost(id, timestamp, title, body, author, 
+            const newPost =  await postNewPost(id, timestamp, title, body, author, 
                 category)
-            const resArray = Object.values(res)
-            console.log(resArray)
-            const voteScore = resArray[0];
-            const deleted = resArray[1];
-            const commentCount = resArray[2];
-            dispatch(addPost(id, timestamp, title, body, author, 
-                category, voteScore, deleted, commentCount ))
+            // const resArray = Object.values(res)
+            // console.log(res)
+            // const voteScore = resArray[0];
+            // const deleted = resArray[1];
+            // const commentCount = resArray[2];
+            dispatch(addPost(newPost))
         } 
         catch(error) {
             console.log(error);
@@ -139,4 +141,22 @@ export function handleGetAllComments () {
         .then(res => 
             dispatch(receiveAllComments(res)))
     }
+}
+
+export function handlePostVote (id, option) {
+    return dispatch => {
+        return voteForPost(id, option)
+        .then(res => 
+            dispatch(voteForPost(res)))
+    }
+}
+
+export function handleCommentVote (id, option) {
+    return dispatch => {
+        return voteForComment(id, option)
+        .then(res =>
+            dispatch(voteOnComment(res))
+            )
+    }
+    
 }

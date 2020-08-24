@@ -41,12 +41,14 @@ export const getPostDetails = (id) =>
     fetch(`${api}/post/${id}`, { headers })
     .then(res => res.json())
 
-export const voteForPost = (option) => 
-    fetch(`${api}/posts`, {
+export const voteForPost = (id, option) => 
+    fetch(`${api}/posts/${id}`, {
         method: 'POST',
-        headers: { headers },
-        body: JSON.stringify({'option': option})})
-        .then(res => res.json())
+        body: JSON.stringify({option}),
+        headers
+    })
+    .then(res => res.json())
+    .then(data => data)
 
 export const editPost = (id, title, body, category, author, timestamp) =>
     fetch(`${api}/comments/${id}`, {
@@ -93,9 +95,11 @@ export const getCommentDetails = (id) =>
 export const voteForComment= (id, option) => 
     fetch(`${api}/comments/${id}`, {
         method: 'POST',
-        headers: { headers },
-        body: JSON.stringify({'option': option})})
+        body: JSON.stringify({option}),
+        headers
+    })
         .then(res => res.json())
+        .then(data => data)
 
 export const editComment= (id, author, timestamp, body) =>
     // get parentId and votescore

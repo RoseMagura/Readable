@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleGetComments, handleDeleteComment } from '../actions/shared';
+import { handleCommentVote, handleDeleteComment } from '../actions/shared';
 import { deletePost, editPost, votePost } from './PostList';
 import { Link } from 'react-router-dom';
 
@@ -9,12 +9,17 @@ export const deleteComment = (e, dispatch, parentId) => {
     const result = window.confirm(
         `Are you sure you want to delete the comment ${e.target.name}?`
     );
-    // console.log('from delete comment', parentId)
     result && dispatch(handleDeleteComment(e.target.id, parentId));
 };
 
+export const voteForComment = (e, dispatch) => {
+    e.preventDefault();
+    dispatch(handleCommentVote(e.target.id, e.target.name));
+}
+
 export const displayComments = (comments, dispatch) =>
     comments.map((comment) => (
+        !comment.deleted &&
         <li key={comment.id}>
             {comment.author} <br />
             {/* responding to '{post.title}'<br /> */}
@@ -23,8 +28,17 @@ export const displayComments = (comments, dispatch) =>
             <Link to={`/comments/${comment.id}`}>{comment.body}</Link>
             <br />
             {comment.voteScore} votes
-            <button>Upvote</button>
-            <button>Downvote</button> <br />
+            <button
+             id={`${comment.id}`}
+             name='upVote'
+             onClick={(e) => {
+                 voteForComment(e, dispatch);
+             }}>Upvote</button>
+            <button id={`${comment.id}`}
+             name='downVote'
+             onClick={(e) => {
+                 voteForComment(e, dispatch);
+             }}>Downvote</button> <br />
             <button>Edit</button> <br />
             <button
                 id={`${comment.id}`}
@@ -118,17 +132,13 @@ class PostDetail extends Component {
                         {post.commentCount > 0 ? (
                             <ul>
                                 {
-                                // Object.values(comments).length !== undefined &&
-                                // Object.values(comments).map((comment) =>
-                                //     comment.parentId === postId && JSON.stringify(comment))
-
                                     displayComments(
                                         postComments,
                                         this.props.dispatch
                                     )}
-                                    {
+                                    {/* {
                                     JSON.stringify(postComments)
-                                    }
+                                    } */}
                                 {/* add a button to add comment after looping 
                             through comments */}
                                 <Link to={'/comments/create'}>

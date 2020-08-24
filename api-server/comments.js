@@ -61,8 +61,6 @@ function get (token, id) {
 }
 
 function add (token, comment) {
-    console.log('DISPLAYING from comments.js:')
-    console.log(comment)
   return new Promise((res) => {
     let comments = getData(token)
     

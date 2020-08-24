@@ -28,25 +28,11 @@ export function getCommentInfo(comment) {
 }
 
 export function createComment(
-    id,
-    timestamp,
-    body,
-    author,
-    voteScore,
-    deleted,
-    parentDeleted,
-    parentId
+    comment
 ) {
     return {
         type: CREATE_COMMENT,
-        comment: {id,
-        timestamp,
-        body,
-        author,
-        voteScore,
-        deleted,
-        parentDeleted,
-        parentId}
+        comment
     };
 }
 
@@ -69,11 +55,9 @@ export function removeComment(id) {
     };
 }
 
-export function voteOnComment(id, option) {
+export function voteOnComment(updatedComment) {
     return {
         type: VOTE_ON_COMMENT,
-        // might not need id?
-        id,
-        option,
+        updatedComment
     };
 }

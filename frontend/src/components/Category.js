@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleGetCatgoryInfo } from '../actions/shared';
-import { convertUnix, displayComments } from './PostDetail';
+import { convertUnix, displayComments, voteForComment } from './PostDetail';
 import { deletePost, editPost, votePost } from './PostList';
 import { Link } from 'react-router-dom';
 
@@ -20,11 +20,12 @@ import { Link } from 'react-router-dom';
 //     }
 
 class Category extends Component {
-    // componentDidMount() {
-    //     const { categoryId, dispatch } = this.props;
-    //     const index = findIndex(categoryId);
-    //     dispatch(handleGetCatgoryInfo(index, categoryId))
-    // }
+    componentDidMount() {
+        // const { categoryId, dispatch } = this.props;
+        // const index = findIndex(categoryId);
+        // dispatch(handleGetCatgoryInfo(index, categoryId))
+        // dispatch
+    }
     linkToNewPost = () => {
         this.props.history.push('/posts/create');
     };
@@ -88,6 +89,14 @@ class Category extends Component {
                 p.category === categoryId && topicPosts.push(p);
             });
         topicPosts.map((post) => (totalComments += post.commentCount));
+        let topicComments =[];
+        // let commentParents
+        // console.log(topicPosts[0].id) 
+        Object.values(comments).length !== undefined &&
+        Object.values(comments).map((comment) =>
+            topicPosts[0].id === comment.parentId  
+                && topicComments.push(comment)
+            )
         return (
             <div>
                 <h3>{formattedTitle}</h3>
@@ -111,18 +120,19 @@ class Category extends Component {
                         </div>
                     )}
                     <div>
-                    {JSON.stringify(comments)}
                         {/* {!loading && comments.length > 0 && (
                             <ul> */}
-                                
-                                {/* {displayComments(comments, this.props.dispatch)}
+                                <ul>
+                                {!loading && topicComments.length > 0 && 
+                                displayComments(topicComments, this.props.dispatch)}
                                 {totalComments !== 0 && (
                                     <Link to={`/comments/create`}>
                                         <button>Add a Comment</button>
                                     </Link>
-                                )} */}
+                                )}
                             {/* </ul>
                         )} */}
+                        </ul>
                     </div>
                 </div>
             </div>

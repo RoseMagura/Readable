@@ -75,7 +75,7 @@ class PostDetail extends Component {
     //     !loading && this.props.dispatch(handleGetComments(post.id));
     // }
     render() {
-        const { posts, comments, postId, history } = this.props;
+        const { posts, comments, postId, history, dispatch } = this.props;
         const loading = Object.values(posts).length === undefined;
         let postArray = [];
         !loading &&
@@ -104,8 +104,25 @@ class PostDetail extends Component {
                         at {convertUnix(post.timestamp)}
                         <br />
                         {post.voteScore} votes
-                        <button>Upvote</button>
-                        <button>Downvote</button> <br />
+                        <button
+                                id={`${post.id}`}
+                                name="upVote"
+                                onClick={(e) => {
+                                    votePost(e, dispatch);
+                                }}
+                            >
+                                Upvote
+                            </button>
+                            <button
+                                id={`${post.id}`}
+                                name="downVote"
+                                onClick={(e) => {
+                                    votePost(e, dispatch);
+                                }}
+                            >
+                                Downvote
+                            </button>{' '}
+                            <br />
                         {post.commentCount} comments <br />
                         <button
                             id={`${post.id}`}

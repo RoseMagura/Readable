@@ -49,8 +49,25 @@ class Category extends Component {
                                 at {convertUnix(post.timestamp)}
                                 <br />
                                 {post.voteScore} votes
-                                <button>Upvote</button>
-                                <button>Downvote</button> <br />
+                                <button
+                                id={`${post.id}`}
+                                name="upVote"
+                                onClick={(e) => {
+                                    votePost(e, this.props.dispatch);
+                                }}
+                            >
+                                Upvote
+                            </button>
+                            <button
+                                id={`${post.id}`}
+                                name="downVote"
+                                onClick={(e) => {
+                                    votePost(e, this.props.dispatch);
+                                }}
+                            >
+                                Downvote
+                            </button>{' '}
+                            <br />
                                 {post.commentCount} comments <br />
                                 <button
                                     id={`${post.id}`}

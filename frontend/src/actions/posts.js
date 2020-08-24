@@ -30,12 +30,10 @@ export function editPost (id, title, body) {
     }
 }
 
-export function voteOnPost (id, option) {
+export function voteOnPost (updatedPost) {
     return {
         type: VOTE_ON_POST,
-        // might not need id?
-        id, 
-        option
+        updatedPost
     }
 }
 

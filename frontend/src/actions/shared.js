@@ -6,7 +6,8 @@ import {
     receivePosts, 
     addPost, 
     removePost,
-    updatePost} from './posts';
+    updatePost,
+    voteOnPost} from './posts';
 import { 
     getAllCategories,
     getAllPosts,
@@ -146,8 +147,8 @@ export function handleGetAllComments () {
 export function handlePostVote (id, option) {
     return dispatch => {
         return voteForPost(id, option)
-        .then(res => 
-            dispatch(voteForPost(res)))
+        .then(res =>
+            dispatch(voteOnPost(res)))
     }
 }
 

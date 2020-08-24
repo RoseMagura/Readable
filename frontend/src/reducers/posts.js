@@ -16,18 +16,11 @@ export default function posts (state = {}, action){
         case REMOVE_POST :
             return state.filter((post) => post.id !== action.id)
         case VOTE_ON_POST :
-            // let same = [];
-            // let change = [];
-            // state.map((post) => 
-            // {   post.id === action.id 
-            //     ? change.push(post)
-            //     : same.push(post);
-            // }    
-            // )
-            // action.value === 'increase' ? change[0].voteScore++
-            // : change[0].voteScore--;
-            // return same.concat(change)
-            return state
+            let newState = []
+            state.map((post) => post.id === action.updatedPost.id 
+                ? newState.push(action.updatedPost)
+                : newState.push(post))
+            return newState
         case EDIT_POST : 
             return state    
         case UPDATE_POST :

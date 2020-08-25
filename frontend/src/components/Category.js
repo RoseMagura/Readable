@@ -8,7 +8,7 @@ class Category extends Component {
     linkToNewPost = () => {
         this.props.history.push('/posts/create');
     };
-    renderSwitch(param) {
+    renderSwitch(param, categoryId) {
         switch (param.length) {
             case 0:
                 return <h5>No Posts</h5>;
@@ -19,7 +19,9 @@ class Category extends Component {
                             <li key={post.id}>
                                 {post.category}
                                 <br />
+                                <Link to={`/${categoryId}/${post.id}`}>
                                 {post.title}
+                                </Link>
                                 <br />
                                 {post.body}
                                 <br />
@@ -93,7 +95,7 @@ class Category extends Component {
                 <h3>{formattedTitle}</h3>
                 <div>
                     <h4>Posts</h4>
-                    {!loading && this.renderSwitch(topicPosts)}
+                    {!loading && this.renderSwitch(topicPosts, categoryId)}
                 </div>
                 <div>
                     <button type="button" onClick={this.linkToNewPost}>

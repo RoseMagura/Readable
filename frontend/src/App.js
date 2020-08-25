@@ -42,7 +42,7 @@ class App extends Component {
                                     history={props.history}/>  
                             )}
                         />
-                        <Route exact path='/category/:categoryId'
+                        <Route exact path='/:categoryId'
                             component={(props) => (
                                 <Category 
                                     categoryId={props.match.params.categoryId}
@@ -67,14 +67,6 @@ class App extends Component {
                                     history={props.history}/>  
                             )}
                         />
-                        <Route exact path='/posts/:postId'
-                            component={(props) => (
-                                <PostDetail 
-                                    postId={props.match.params.postId}
-                                    posts={props.posts}
-                                    history={props.history}/>  
-                            )}
-                        />
                         <Route 
                             exact path='/comments/create'
                             component={(props) => (
@@ -93,7 +85,15 @@ class App extends Component {
                             <EditComment
                                 commentId={props.match.params.commentId} 
                                 history={props.history}/>
-                            )}/>   
+                            )}/>  
+                                                <Route exact path={['/posts/:postId', '/:categoryId/:postId']}
+                            component={(props) => (
+                                <PostDetail 
+                                    postId={props.match.params.postId}
+                                    posts={props.posts}
+                                    history={props.history}/>  
+                            )}
+                        /> 
                         <Route>
                             <NoMatchPage />
                         </Route>

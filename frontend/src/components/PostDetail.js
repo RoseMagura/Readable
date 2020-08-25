@@ -27,7 +27,9 @@ export const displayComments = (comments, dispatch) =>
             <br />
             <Link to={`/comments/${comment.id}`}>{comment.body}</Link>
             <br />
-            {comment.voteScore} votes
+            {Math.abs(comment.voteScore) > 1
+                                ? `${comment.voteScore} votes`
+                                : `${comment.voteScore} vote`}
             <button
              id={`${comment.id}`}
              name='upVote'
@@ -84,9 +86,12 @@ class PostDetail extends Component {
 
         return (
             <div>
-                <h1>Post Details</h1>
-                {post !== undefined && (
+                {post === undefined 
+                ? <h4>404 Page Not Found</h4> 
+                : 
+                (
                     <div>
+                        <h1>Post Details</h1>
                         {post.category}
                         <br />
                         {post.title}
@@ -117,7 +122,9 @@ class PostDetail extends Component {
                                 Downvote
                             </button>{' '}
                             <br />
-                        {post.commentCount} comments <br />
+                            {Math.abs(post.commentCount) > 1
+                                ? `${post.commentCount} comments`
+                                : `${post.commentCount} comment`} <br />
                         <button
                             id={`${post.id}`}
                             name={`${post.title}`}

@@ -77,7 +77,7 @@ class CreatePost extends Component {
     render() {
         return (
             <div>
-                <h1>CreatePost</h1>
+                <h1>Create Post</h1>
                 {this.makeForm()}
             </div>
         )

@@ -116,7 +116,9 @@ class PostList extends Component {
                                 Downvote
                             </button>{' '}
                             <br />
-                            {post.commentCount} comments <br />
+                            {Math.abs(post.commentCount) > 1
+                                ? `${post.commentCount} comments`
+                                : `${post.commentCount} comment`} <br />
                             <button>
                                 <Link to={`/posts/${post.id}/edit`}>
                                     Edit

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { handleGetCatgoryInfo } from '../actions/shared';
 import { convertUnix, displayComments } from './PostDetail';
 import { deletePost, votePost } from './PostList';
 import { Link } from 'react-router-dom';
@@ -112,8 +111,6 @@ class Category extends Component {
                         </div>
                     )}
                     <div>
-                        {/* {!loading && comments.length > 0 && (
-                            <ul> */}
                                 <ul>
                                 {!loading && topicComments.length > 0 && 
                                 displayComments(topicComments, this.props.dispatch)}

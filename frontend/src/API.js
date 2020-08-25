@@ -103,7 +103,7 @@ export const voteForComment = (id, option) =>
         .then((res) => res.json())
         .then((data) => data);
 
-export const editComment = (id, timestamp, body) =>
+export const putComment = (id, timestamp, body) =>
     fetch(`${api}/comments/${id}`, {
         method: 'PUT',
         body: JSON.stringify({

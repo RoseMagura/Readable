@@ -39,7 +39,11 @@ export const displayComments = (comments, dispatch) =>
              onClick={(e) => {
                  voteForComment(e, dispatch);
              }}>Downvote</button> <br />
-            <button>Edit</button> <br />
+            <button>
+                <Link to={`/comments/${comment.id}/edit`}>
+                    Edit
+                </Link>
+            </button> <br />
             <button
                 id={`${comment.id}`}
                 name={`${comment.body}`}

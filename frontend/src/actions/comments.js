@@ -36,15 +36,10 @@ export function createComment(
     };
 }
 
-//or just needs timestamp and body?
-export function editComment(id, timestamp, body, author, parentId) {
+export function editComment(editedComment) {
     return {
         type: EDIT_COMMENT,
-        id,
-        timestamp,
-        body,
-        author,
-        parentId,
+        editedComment
     };
 }
 

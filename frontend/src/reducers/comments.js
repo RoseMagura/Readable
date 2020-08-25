@@ -21,9 +21,13 @@ export default function comments(state = [], action) {
                 ...state,
                 [action.comment.id]: { ...action.comment },
             };
-        // TODO: edit
         case EDIT_COMMENT:
-            return state;
+            return {
+                ...state,
+                [action.editedComment.id]: {
+                    ...action.editedComment
+                }
+            } 
         case REMOVE_COMMENT:
             return {
                 ...state,

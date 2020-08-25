@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleEditPost } from '../actions/shared';
-// import { handleEditPost } from '../actions/shared';
 
 class EditPost extends Component {
     state = {
@@ -43,7 +42,6 @@ class EditPost extends Component {
     }
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log('submitted')
         const { title, body } = this.state;
         const { postId, history, dispatch } = this.props;
         dispatch(handleEditPost(postId, title, body))

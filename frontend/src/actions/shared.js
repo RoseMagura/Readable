@@ -22,7 +22,8 @@ import {
     postComment,
     voteForPost,
     voteForComment,
-    putPost
+    putPost,
+    putComment
 } from '../API';
 import { 
     receiveComments, 
@@ -30,7 +31,8 @@ import {
     getCommentInfo, 
     removeComment,
     createComment,
-    voteOnComment } from './comments';
+    voteOnComment,
+    editComment } from './comments';
 
 export function handleGetCategories () {
     return (dispatch) => {
@@ -163,5 +165,14 @@ export function handleEditPost (id, title, body) {
     return dispatch => {
         return putPost(id, title, body)
         .then(res => dispatch(editPost(res)))
+    }
+}
+
+export function handleEditComment (id, timestamp, body) {
+    return dispatch => {
+        return putComment(id, timestamp, body)
+        .then(res =>
+            dispatch(editComment(res))
+            )
     }
 }

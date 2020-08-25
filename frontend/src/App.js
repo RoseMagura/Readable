@@ -88,9 +88,12 @@ class App extends Component {
                                 commentId={props.match.params.commentId} 
                                 history={props.history}/>
                             )}/>  
-                        <Route exact path='/comments/:commentId/edit'>
-                            <EditComment />
-                        </Route>  
+                        <Route exact path='/comments/:commentId/edit'
+                        component={(props)=> (
+                            <EditComment
+                                commentId={props.match.params.commentId} 
+                                history={props.history}/>
+                            )}/>   
                         <Route>
                             <NoMatchPage />
                         </Route>

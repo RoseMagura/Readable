@@ -82,6 +82,7 @@ class PostList extends Component {
                 {this.handleSorting(posts)}
                 {!loading &&
                     posts.map((post) => (
+                        !post.deleted &&
                         <li key={post.id}>
                             {post.category}
                             <br />
@@ -116,15 +117,12 @@ class PostList extends Component {
                             </button>{' '}
                             <br />
                             {post.commentCount} comments <br />
-                            <button
-                                id={`${post.id}`}
-                                name={`${post.title}`}
-                                onClick={(e) => {
-                                    editPost(e, this.props.dispatch);
-                                }}
-                            >
-                                Edit
-                            </button>{' '}
+                            <button>
+                                <Link to={`/posts/${post.id}/edit`}>
+                                    Edit
+                                </Link>
+                            </button>
+                            {' '}
                             <br />
                             <button
                                 id={`${post.id}`}

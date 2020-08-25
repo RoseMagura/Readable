@@ -37,7 +37,7 @@ class CreateComment extends Component {
                     onChange={this.handleChange} >
                     <option value='Pick a post'>Pick a post</option>
                     {this.props.posts.length !== undefined && this.props.posts.map((post) => 
-                        <option value={post.id} key={post.id}>
+                        !post.deleted && <option value={post.id} key={post.id}>
                             {post.title}</option>)}
                 </select>
             </label><br/>

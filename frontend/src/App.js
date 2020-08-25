@@ -59,9 +59,14 @@ class App extends Component {
                                     history={props.history}/>  
                             )}
                         />
-                        <Route exact path='/posts/:postId/edit'>
-                            <EditPost />
-                        </Route>
+                        <Route exact path='/posts/:postId/edit'
+                        component={(props) => (
+                                <EditPost 
+                                    postId={props.match.params.postId}
+                                    posts={props.posts}
+                                    history={props.history}/>  
+                            )}
+                        />
                         <Route exact path='/posts/:postId'
                             component={(props) => (
                                 <PostDetail 

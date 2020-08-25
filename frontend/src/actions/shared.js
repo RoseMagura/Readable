@@ -7,6 +7,7 @@ import {
     addPost, 
     removePost,
     updatePost,
+    editPost,
     voteOnPost} from './posts';
 import { 
     getAllCategories,
@@ -20,7 +21,8 @@ import {
     getCommentDetails,
     postComment,
     voteForPost,
-    voteForComment
+    voteForComment,
+    putPost
 } from '../API';
 import { 
     receiveComments, 
@@ -76,11 +78,6 @@ export function handlePosting (id, timestamp, title, body, author, category) {
         try{
             const newPost =  await postNewPost(id, timestamp, title, body, author, 
                 category)
-            // const resArray = Object.values(res)
-            // console.log(res)
-            // const voteScore = resArray[0];
-            // const deleted = resArray[1];
-            // const commentCount = resArray[2];
             dispatch(addPost(newPost))
         } 
         catch(error) {
@@ -94,7 +91,7 @@ export function handleCommenting (id, timestamp, body, author, parentId) {
         try{
             const res =  await postComment(id, timestamp, body, author, 
                 parentId)
-            console.log(res)
+            // console.log(res)
             dispatch(createComment(res))
             dispatch(updatePost(parentId, 'increase'))
         } 
@@ -108,8 +105,9 @@ export function handleCommenting (id, timestamp, body, author, parentId) {
 export function handleDeletePost (id) {
     return async dispatch => {
         try {
-            await deletePost
-            dispatch(removePost(id))}
+            const res = await deletePost(id)
+            dispatch(removePost(res))
+        }
         catch(error) {
             console.log(error);
         }
@@ -119,7 +117,7 @@ export function handleDeletePost (id) {
 export function handleDeleteComment (commentId, parentId) {
     return async dispatch => {
         try {
-            await deleteComment
+            await deleteComment(commentId)
             dispatch(removeComment(commentId))
             dispatch(updatePost(parentId, 'decrease'))
         }
@@ -158,6 +156,12 @@ export function handleCommentVote (id, option) {
         .then(res =>
             dispatch(voteOnComment(res))
             )
+    }   
+}
+
+export function handleEditPost (id, title, body) {
+    return dispatch => {
+        return putPost(id, title, body)
+        .then(res => dispatch(editPost(res)))
     }
-    
 }

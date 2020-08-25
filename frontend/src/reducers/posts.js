@@ -14,7 +14,11 @@ export default function posts (state = {}, action){
         case ADD_POST :
             return [...state.concat(action.post)] 
         case REMOVE_POST :
-            return state.filter((post) => post.id !== action.id)
+            let updated = [];
+            state.map((post) => post.id === action.edited.id 
+                ? updated.push(action.edited)
+                : updated.push(post))
+            return updated
         case VOTE_ON_POST :
             let newState = []
             state.map((post) => post.id === action.updatedPost.id 
@@ -22,15 +26,19 @@ export default function posts (state = {}, action){
                 : newState.push(post))
             return newState
         case EDIT_POST : 
-            return state    
+            let after = []
+            state.map((post) => post.id === action.post.id 
+                ? after.push(action.post)
+                : after.push(post))
+            return after    
         case UPDATE_POST :
             let newArray = [];
             let toEdit = [];
             state.map((post) => 
-            {   post.id === action.id 
+            (  post.id === action.id 
                 ? toEdit.push(post)
-                : newArray.push(post);
-            }    
+                : newArray.push(post)
+            ) 
             )
             action.value === 'increase' ? toEdit[0].commentCount++
             : toEdit[0].commentCount--;

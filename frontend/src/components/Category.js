@@ -1,31 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleGetCatgoryInfo } from '../actions/shared';
-import { convertUnix, displayComments, voteForComment } from './PostDetail';
-import { deletePost, editPost, votePost } from './PostList';
+// import { handleGetCatgoryInfo } from '../actions/shared';
+import { convertUnix, displayComments } from './PostDetail';
+import { deletePost, votePost } from './PostList';
 import { Link } from 'react-router-dom';
 
-// export const findIndex = (categoryId) => {
-//     let index;
-//         switch(categoryId){
-//             case 'react':
-//                 return index = 0;
-//             case 'redux':
-//                 return index = 1;
-//             case 'udacity':
-//                 return index = 2;
-//             default:
-//                 return index = 0
-//         }
-//     }
-
 class Category extends Component {
-    componentDidMount() {
-        // const { categoryId, dispatch } = this.props;
-        // const index = findIndex(categoryId);
-        // dispatch(handleGetCatgoryInfo(index, categoryId))
-        // dispatch
-    }
     linkToNewPost = () => {
         this.props.history.push('/posts/create');
     };
@@ -69,14 +49,9 @@ class Category extends Component {
                             </button>{' '}
                             <br />
                                 {post.commentCount} comments <br />
-                                <button
-                                    id={`${post.id}`}
-                                    name={`${post.title}`}
-                                    onClick={(e) => {
-                                        editPost(e, this.props.dispatch);
-                                    }}
-                                >
-                                    Edit
+                                <button>
+                                   <Link to={`/posts/${post.id}/edit`}>
+                            Edit</Link>
                                 </button>{' '}
                                 <br />
                                 <button
@@ -102,9 +77,9 @@ class Category extends Component {
             categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
         let totalComments = 0;
         !loading &&
-            posts.map((p) => {
-                p.category === categoryId && topicPosts.push(p);
-            });
+            posts.map((p) => (
+                p.category === categoryId && topicPosts.push(p)
+            ));
         topicPosts.map((post) => (totalComments += post.commentCount));
         let topicComments =[];
         // let commentParents

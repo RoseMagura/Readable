@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleCommentVote, handleDeleteComment } from '../actions/shared';
-import { deletePost, editPost, votePost } from './PostList';
+import { deletePost, votePost } from './PostList';
 import { Link } from 'react-router-dom';
 
 export const deleteComment = (e, dispatch, parentId) => {
@@ -64,16 +64,6 @@ export const convertUnix = (timestamp) => {
 };
 
 class PostDetail extends Component {
-    // componentDidMount() {
-    //     const loading = this.props.posts.length === undefined;
-    //     let postArray = [];
-    //     !loading &&
-    //         this.props.posts.map(
-    //             (p) => p.id === this.props.postId && postArray.push(p)
-    //         );
-    //     const post = postArray[0];
-    //     !loading && this.props.dispatch(handleGetComments(post.id));
-    // }
     render() {
         const { posts, comments, postId, history, dispatch } = this.props;
         const loading = Object.values(posts).length === undefined;
@@ -127,11 +117,8 @@ class PostDetail extends Component {
                         <button
                             id={`${post.id}`}
                             name={`${post.title}`}
-                            onClick={(e) => {
-                                editPost(e, this.props.dispatch);
-                            }}
-                        >
-                            Edit
+                        ><Link to={`/posts/${postId}/edit`}>
+                            Edit</Link>
                         </button>{' '}
                         <br />
                         <button
@@ -153,9 +140,6 @@ class PostDetail extends Component {
                                         postComments,
                                         this.props.dispatch
                                     )}
-                                    {/* {
-                                    JSON.stringify(postComments)
-                                    } */}
                                 {/* add a button to add comment after looping 
                             through comments */}
                                 <Link to={'/comments/create'}>

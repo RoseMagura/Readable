@@ -21,12 +21,10 @@ export function addPost (post) {
     }
 }
 
-export function editPost (id, title, body) {
+export function editPost (post) {
     return {
         type: EDIT_POST,
-        id,
-        title,
-        body
+        post
     }
 }
 
@@ -37,10 +35,10 @@ export function voteOnPost (updatedPost) {
     }
 }
 
-export function removePost (id) {
+export function removePost (edited) {
     return{
         type: REMOVE_POST,
-        id
+        edited
     }
 }
 

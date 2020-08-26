@@ -5,9 +5,6 @@ import { deletePost, votePost } from './PostList';
 import { Link } from 'react-router-dom';
 
 class Category extends Component {
-    linkToNewPost = () => {
-        this.props.history.push('/posts/create');
-    };
     renderSwitch(param, categoryId) {
         switch (param.length) {
             case 0:
@@ -20,7 +17,7 @@ class Category extends Component {
                                 {post.category}
                                 <br />
                                 <Link to={`/${categoryId}/${post.id}`}>
-                                {post.title}
+                                    {post.title}
                                 </Link>
                                 <br />
                                 {post.body}
@@ -31,28 +28,29 @@ class Category extends Component {
                                 <br />
                                 {post.voteScore} votes
                                 <button
-                                id={`${post.id}`}
-                                name="upVote"
-                                onClick={(e) => {
-                                    votePost(e, this.props.dispatch);
-                                }}
-                            >
-                                Upvote
-                            </button>
-                            <button
-                                id={`${post.id}`}
-                                name="downVote"
-                                onClick={(e) => {
-                                    votePost(e, this.props.dispatch);
-                                }}
-                            >
-                                Downvote
-                            </button>{' '}
-                            <br />
+                                    id={`${post.id}`}
+                                    name="upVote"
+                                    onClick={(e) => {
+                                        votePost(e, this.props.dispatch);
+                                    }}
+                                >
+                                    Upvote
+                                </button>
+                                <button
+                                    id={`${post.id}`}
+                                    name="downVote"
+                                    onClick={(e) => {
+                                        votePost(e, this.props.dispatch);
+                                    }}
+                                >
+                                    Downvote
+                                </button>{' '}
+                                <br />
                                 {post.commentCount} comments <br />
                                 <button>
-                                   <Link to={`/posts/${post.id}/edit`}>
-                            Edit</Link>
+                                    <Link to={`/posts/${post.id}/edit`}>
+                                        Edit
+                                    </Link>
                                 </button>{' '}
                                 <br />
                                 <button
@@ -78,18 +76,16 @@ class Category extends Component {
             categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
         let totalComments = 0;
         !loading &&
-            posts.map((p) => (
-                p.category === categoryId && topicPosts.push(p)
-            ));
+            posts.map((p) => p.category === categoryId && topicPosts.push(p));
         topicPosts.map((post) => (totalComments += post.commentCount));
-        let topicComments =[];
-        // let commentParents
-        // console.log(topicPosts[0].id) 
+        let topicComments = [];
         Object.values(comments).length !== undefined &&
-        Object.values(comments).map((comment) =>
-            topicPosts[0].id === comment.parentId  
-                && topicComments.push(comment)
-            )
+            topicPosts.length > 0 &&
+            Object.values(comments).map(
+                (comment) =>
+                    topicPosts[0].id === comment.parentId &&
+                    topicComments.push(comment)
+            );
         return (
             <div>
                 <h3>{formattedTitle}</h3>
@@ -98,8 +94,8 @@ class Category extends Component {
                     {!loading && this.renderSwitch(topicPosts, categoryId)}
                 </div>
                 <div>
-                    <button type="button" onClick={this.linkToNewPost}>
-                        New Post
+                    <button>
+                        <Link to="/posts/create">New Post</Link>
                     </button>
                 </div>
                 <div>
@@ -113,16 +109,18 @@ class Category extends Component {
                         </div>
                     )}
                     <div>
-                                <ul>
-                                {!loading && topicComments.length > 0 && 
-                                displayComments(topicComments, this.props.dispatch)}
-                                {totalComments !== 0 && (
-                                    <Link to={`/comments/create`}>
-                                        <button>Add a Comment</button>
-                                    </Link>
+                        <ul>
+                            {!loading &&
+                                topicComments.length > 0 &&
+                                displayComments(
+                                    topicComments,
+                                    this.props.dispatch
                                 )}
-                            {/* </ul>
-                        )} */}
+                            {totalComments !== 0 && (
+                                <Link to={`/comments/create`}>
+                                    <button>Add a Comment</button>
+                                </Link>
+                            )}
                         </ul>
                     </div>
                 </div>

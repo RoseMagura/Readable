@@ -6,11 +6,11 @@ export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
 
-export function receiveAllComments (comments) {
-    return{
+export function receiveAllComments(comments) {
+    return {
         type: RECEIVE_ALL_COMMENTS,
-        comments
-    }
+        comments,
+    };
 }
 
 export function receiveComments(comments) {
@@ -27,19 +27,17 @@ export function getCommentInfo(comment) {
     };
 }
 
-export function createComment(
-    comment
-) {
+export function createComment(comment) {
     return {
         type: CREATE_COMMENT,
-        comment
+        comment,
     };
 }
 
 export function editComment(editedComment) {
     return {
         type: EDIT_COMMENT,
-        editedComment
+        editedComment,
     };
 }
 
@@ -53,6 +51,6 @@ export function removeComment(id) {
 export function voteOnComment(updatedComment) {
     return {
         type: VOTE_ON_COMMENT,
-        updatedComment
+        updatedComment,
     };
 }

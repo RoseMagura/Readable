@@ -6,5 +6,5 @@ import categories from './categories';
 export default combineReducers({
     posts,
     comments,
-    categories
+    categories,
 });

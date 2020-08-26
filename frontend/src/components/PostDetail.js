@@ -15,49 +15,57 @@ export const deleteComment = (e, dispatch, parentId) => {
 export const voteForComment = (e, dispatch) => {
     e.preventDefault();
     dispatch(handleCommentVote(e.target.id, e.target.name));
-}
+};
 
 export const displayComments = (comments, dispatch) =>
-    comments.map((comment) => (
-        !comment.deleted &&
-        <li key={comment.id}>
-            {comment.author} <br />
-            {/* responding to '{post.title}'<br /> */}
-            at {convertUnix(comment.timestamp)}
-            <br />
-            <Link to={`/comments/${comment.id}`}>{comment.body}</Link>
-            <br />
-            {Math.abs(comment.voteScore) > 1
-                                ? `${comment.voteScore} votes`
-                                : `${comment.voteScore} vote`}
-            <button
-             id={`${comment.id}`}
-             name='upVote'
-             onClick={(e) => {
-                 voteForComment(e, dispatch);
-             }}>Upvote</button>
-            <button id={`${comment.id}`}
-             name='downVote'
-             onClick={(e) => {
-                 voteForComment(e, dispatch);
-             }}>Downvote</button> <br />
-            <button>
-                <Link to={`/comments/${comment.id}/edit`}>
-                    Edit
-                </Link>
-            </button> <br />
-            <button
-                id={`${comment.id}`}
-                name={`${comment.body}`}
-                onClick={(e) => {
-                    deleteComment(e, dispatch, comment.parentId);
-                }}
-            >
-                Delete
-            </button>{' '}
-            <br />
-        </li>
-    ));
+    comments.map(
+        (comment) =>
+            !comment.deleted && (
+                <li key={comment.id}>
+                    {comment.author} <br />
+                    at {convertUnix(comment.timestamp)}
+                    <br />
+                    <Link to={`/comments/${comment.id}`}>{comment.body}</Link>
+                    <br />
+                    {Math.abs(comment.voteScore) > 1
+                        ? `${comment.voteScore} votes`
+                        : `${comment.voteScore} vote`}
+                    <button
+                        id={`${comment.id}`}
+                        name="upVote"
+                        onClick={(e) => {
+                            voteForComment(e, dispatch);
+                        }}
+                    >
+                        Upvote
+                    </button>
+                    <button
+                        id={`${comment.id}`}
+                        name="downVote"
+                        onClick={(e) => {
+                            voteForComment(e, dispatch);
+                        }}
+                    >
+                        Downvote
+                    </button>{' '}
+                    <br />
+                    <button>
+                        <Link to={`/comments/${comment.id}/edit`}>Edit</Link>
+                    </button>{' '}
+                    <br />
+                    <button
+                        id={`${comment.id}`}
+                        name={`${comment.body}`}
+                        onClick={(e) => {
+                            deleteComment(e, dispatch, comment.parentId);
+                        }}
+                    >
+                        Delete
+                    </button>{' '}
+                    <br />
+                </li>
+            )
+    );
 
 export const convertUnix = (timestamp) => {
     const date = new Date(timestamp);
@@ -79,17 +87,18 @@ class PostDetail extends Component {
                 (p) => p.id === postId && postArray.push(p)
             );
         const post = postArray[0];
-        let postComments =[];
+        let postComments = [];
         Object.values(comments).length !== undefined &&
-        Object.values(comments).map((comment) =>
-            comment.parentId === postId && postComments.push(comment))
+            Object.values(comments).map(
+                (comment) =>
+                    comment.parentId === postId && postComments.push(comment)
+            );
 
         return (
             <div>
-                {post === undefined 
-                ? <h4>404 Page Not Found</h4> 
-                : 
-                (
+                {post === undefined ? (
+                    <h4>404 Page Not Found</h4>
+                ) : (
                     <div>
                         <h1>Post Details</h1>
                         {post.category}
@@ -104,32 +113,30 @@ class PostDetail extends Component {
                         <br />
                         {post.voteScore} votes
                         <button
-                                id={`${post.id}`}
-                                name="upVote"
-                                onClick={(e) => {
-                                    votePost(e, dispatch);
-                                }}
-                            >
-                                Upvote
-                            </button>
-                            <button
-                                id={`${post.id}`}
-                                name="downVote"
-                                onClick={(e) => {
-                                    votePost(e, dispatch);
-                                }}
-                            >
-                                Downvote
-                            </button>{' '}
-                            <br />
-                            {Math.abs(post.commentCount) > 1
-                                ? `${post.commentCount} comments`
-                                : `${post.commentCount} comment`} <br />
+                            id={`${post.id}`}
+                            name="upVote"
+                            onClick={(e) => {
+                                votePost(e, dispatch);
+                            }}
+                        >
+                            Upvote
+                        </button>
                         <button
                             id={`${post.id}`}
-                            name={`${post.title}`}
-                        ><Link to={`/posts/${postId}/edit`}>
-                            Edit</Link>
+                            name="downVote"
+                            onClick={(e) => {
+                                votePost(e, dispatch);
+                            }}
+                        >
+                            Downvote
+                        </button>{' '}
+                        <br />
+                        {Math.abs(post.commentCount) !== 1
+                            ? `${post.commentCount} comments`
+                            : `${post.commentCount} comment`}{' '}
+                        <br />
+                        <button id={`${post.id}`} name={`${post.title}`}>
+                            <Link to={`/posts/${postId}/edit`}>Edit</Link>
                         </button>{' '}
                         <br />
                         <button
@@ -146,11 +153,10 @@ class PostDetail extends Component {
                         <h2>Comments</h2>
                         {post.commentCount > 0 ? (
                             <ul>
-                                {
-                                    displayComments(
-                                        postComments,
-                                        this.props.dispatch
-                                    )}
+                                {displayComments(
+                                    postComments,
+                                    this.props.dispatch
+                                )}
                                 {/* add a button to add comment after looping 
                             through comments */}
                                 <Link to={'/comments/create'}>

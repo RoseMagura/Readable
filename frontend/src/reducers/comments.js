@@ -25,9 +25,9 @@ export default function comments(state = [], action) {
             return {
                 ...state,
                 [action.editedComment.id]: {
-                    ...action.editedComment
-                }
-            } 
+                    ...action.editedComment,
+                },
+            };
         case REMOVE_COMMENT:
             return {
                 ...state,
@@ -36,10 +36,10 @@ export default function comments(state = [], action) {
                     deleted: true,
                 },
             };
-        case VOTE_ON_COMMENT:  
+        case VOTE_ON_COMMENT:
             return {
                 ...state,
-                [action.updatedComment.id]: {...action.updatedComment}
+                [action.updatedComment.id]: { ...action.updatedComment },
             };
         default:
             return state;

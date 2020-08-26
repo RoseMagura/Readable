@@ -12,12 +12,8 @@ export const deletePost = (e, dispatch) => {
     result && dispatch(handleDeletePost(e.target.id));
 };
 
-export const editPost = (e, dispatch) => {
-    console.log('editing', e.target.id);
-};
-
 export const votePost = (e, dispatch) => {
-    dispatch(handlePostVote(e.target.id, e.target.name))
+    dispatch(handlePostVote(e.target.id, e.target.name));
 };
 
 class PostList extends Component {
@@ -33,7 +29,7 @@ class PostList extends Component {
     sortByScore = (posts) => {
         console.log(posts.sort((a, b) => b.voteScore - a.voteScore));
     };
-    sorting = (state) => {
+    sorting = () => {
         return (
             <div>
                 <h3>Sort by:</h3>
@@ -54,6 +50,14 @@ class PostList extends Component {
                         checked={this.state.selectedOption === 'score'}
                         onChange={(e) => this.handleOptionChange(e)}
                     ></input>
+                    <label>None</label>
+                    <input
+                        type="radio"
+                        name="none"
+                        value="none"
+                        checked={this.state.selectedOption === ''}
+                        onChange={(e) => this.handleOptionChange(e)}
+                    ></input>
                 </form>
             </div>
         );
@@ -67,7 +71,7 @@ class PostList extends Component {
                 this.sortByScore(posts);
                 break;
             default:
-                console.log('no sort');
+                return 'no sort';
         }
     };
 
@@ -81,63 +85,67 @@ class PostList extends Component {
                 {this.sorting()}
                 {this.handleSorting(posts)}
                 {!loading &&
-                    posts.map((post) => (
-                        !post.deleted &&
-                        <li key={post.id}>
-                            {post.category}
-                            <br />
-                            <Link to={`/posts/${post.id}`}>{post.title}</Link>
-                            <br />
-                            {post.body}
-                            <br />
-                            by {post.author}
-                            <br />
-                            at {convertUnix(post.timestamp)}
-                            <br />
-                            {Math.abs(post.voteScore) > 1
-                                ? `${post.voteScore} votes`
-                                : `${post.voteScore} vote`}
-                            <button
-                                id={`${post.id}`}
-                                name="upVote"
-                                onClick={(e) => {
-                                    votePost(e, dispatch);
-                                }}
-                            >
-                                Upvote
-                            </button>
-                            <button
-                                id={`${post.id}`}
-                                name="downVote"
-                                onClick={(e) => {
-                                    votePost(e, dispatch);
-                                }}
-                            >
-                                Downvote
-                            </button>{' '}
-                            <br />
-                            {Math.abs(post.commentCount) > 1
-                                ? `${post.commentCount} comments`
-                                : `${post.commentCount} comment`} <br />
-                            <button>
-                                <Link to={`/posts/${post.id}/edit`}>
-                                    Edit
-                                </Link>
-                            </button>
-                            {' '}
-                            <br />
-                            <button
-                                id={`${post.id}`}
-                                name={`${post.title}`}
-                                onClick={(e) =>
-                                    deletePost(e, this.props.dispatch)
-                                }
-                            >
-                                Delete
-                            </button>{' '}
-                            <br />
-                        </li>
-                    ))}
+                    posts.map(
+                        (post) =>
+                            !post.deleted && (
+                                <li key={post.id}>
+                                    {post.category}
+                                    <br />
+                                    <Link to={`/posts/${post.id}`}>
+                                        {post.title}
+                                    </Link>
+                                    <br />
+                                    {post.body}
+                                    <br />
+                                    by {post.author}
+                                    <br />
+                                    at {convertUnix(post.timestamp)}
+                                    <br />
+                                    {Math.abs(post.voteScore) > 1
+                                        ? `${post.voteScore} votes`
+                                        : `${post.voteScore} vote`}
+                                    <button
+                                        id={`${post.id}`}
+                                        name="upVote"
+                                        onClick={(e) => {
+                                            votePost(e, dispatch);
+                                        }}
+                                    >
+                                        Upvote
+                                    </button>
+                                    <button
+                                        id={`${post.id}`}
+                                        name="downVote"
+                                        onClick={(e) => {
+                                            votePost(e, dispatch);
+                                        }}
+                                    >
+                                        Downvote
+                                    </button>{' '}
+                                    <br />
+                                    {Math.abs(post.commentCount) !== 1
+                                        ? `${post.commentCount} comments`
+                                        : `${post.commentCount} comment`}{' '}
+                                    <br />
+                                    <button>
+                                        <Link to={`/posts/${post.id}/edit`}>
+                                            Edit
+                                        </Link>
+                                    </button>{' '}
+                                    <br />
+                                    <button
+                                        id={`${post.id}`}
+                                        name={`${post.title}`}
+                                        onClick={(e) =>
+                                            deletePost(e, this.props.dispatch)
+                                        }
+                                    >
+                                        Delete
+                                    </button>{' '}
+                                    <br />
+                                </li>
+                            )
+                    )}
             </div>
         );
     }

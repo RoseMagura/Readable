@@ -4,7 +4,7 @@ import { handleCommenting } from '../actions/shared';
 import { generateUID } from './CreatePost';
 import Nav from './Nav';
 import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
+// import Select from '@material-ui/core/Select';
 
 class CreateComment extends Component {
     state = {
@@ -37,7 +37,7 @@ class CreateComment extends Component {
                 <br />
                 <label>
                     Responding To:
-                    <Select
+                    <select
                         style={{ margin: '10px' }}
                         name="parentId"
                         defaultValue={'Pick a post'}
@@ -53,7 +53,24 @@ class CreateComment extends Component {
                                         </option>
                                     )
                             )}
-                    </Select>
+                    </select>
+                    {/* <Select
+                        style={{ margin: '10px' }}
+                        name="parentId"
+                        defaultValue={'Pick a post'}
+                        onChange={this.handleChange}
+                    >
+                        <option value="Pick a post">Pick a post</option>
+                        {this.props.posts.length !== undefined &&
+                            this.props.posts.map(
+                                (post) =>
+                                    !post.deleted && (
+                                        <option value={post.id} key={post.id}>
+                                            {post.title}
+                                        </option>
+                                    )
+                            )}
+                    </Select> */}
                 </label>
                 <br />
                 <Button

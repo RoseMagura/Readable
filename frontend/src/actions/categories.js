@@ -1,7 +1,7 @@
 import {
     RECEIVE_CATEGORIES,
     UPDATE_CATEGORY,
-    ADD_POSTS_TO_CATEGORY
+    ADD_POSTS_TO_CATEGORY,
 } from './types';
 
 export function receiveCategories(categories) {
@@ -11,31 +11,10 @@ export function receiveCategories(categories) {
     };
 }
 
-export function updateCategory(
-    id,
-    timestamp,
-    title,
-    body,
-    author,
-    category,
-    voteScore,
-    deleted,
-    commentCount,
-    index
-) {
+export function updateCategory(post, index) {
     return {
         type: UPDATE_CATEGORY,
-        post: {
-            id,
-            timestamp,
-            title,
-            body,
-            author,
-            category,
-            voteScore,
-            deleted,
-            commentCount,
-        },
+        post,
         index,
     };
 }
@@ -43,6 +22,6 @@ export function updateCategory(
 export function addPostsToCategory(posts) {
     return {
         type: ADD_POSTS_TO_CATEGORY,
-        posts
-    }
+        posts,
+    };
 }

@@ -79,6 +79,12 @@ export function handlePosting(id, timestamp, title, body, author, category) {
     };
 }
 
+export function handleUpdateCategory (post, index) {
+    return dispatch => {
+        dispatch(updateCategory(post, index))
+    }
+}
+
 export function handleCommenting(id, timestamp, body, author, parentId) {
     return async (dispatch) => {
         try {

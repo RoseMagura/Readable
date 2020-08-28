@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handlePosting } from '../actions/shared';
+import { handlePosting, handleUpdateCategory } from '../actions/shared';
 import Nav from './Nav';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
@@ -91,8 +91,27 @@ class CreatePost extends Component {
         const timestamp = Date.now();
         // generate unique ID
         const id = generateUID();
-        dispatch(handlePosting(id, timestamp, title, body, author, category));
-        this.props.history.push('/');
+        const newPost = {id, timestamp, title, body, author, category}
+        switch(String(category)) {
+            case 'react':
+                dispatch(handleUpdateCategory(newPost, 0));
+                dispatch(handlePosting(id, timestamp, title, body, author, category));
+                this.props.history.push('/');
+                break;
+            case 'redux':
+                dispatch(handleUpdateCategory(newPost, 1));
+                dispatch(handlePosting(id, timestamp, title, body, author, category));
+                this.props.history.push('/');
+                break;
+            case 'udacity':
+                dispatch(handleUpdateCategory(newPost, 2));
+                dispatch(handlePosting(id, timestamp, title, body, author, category));
+                this.props.history.push('/');
+                break;
+            default:
+                alert('Sorry, that is not a valid category. Try again.')
+        }
+        
     };
     render() {
         return (

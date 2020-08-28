@@ -4,7 +4,8 @@ import { handleCommenting } from '../actions/shared';
 import { generateUID } from './CreatePost';
 import Nav from './Nav';
 import Button from '@material-ui/core/Button';
-// import Select from '@material-ui/core/Select';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 class CreateComment extends Component {
     state = {
@@ -37,40 +38,23 @@ class CreateComment extends Component {
                 <br />
                 <label>
                     Responding To:
-                    <select
+                    <Select
                         style={{ margin: '10px' }}
                         name="parentId"
-                        defaultValue={'Pick a post'}
+                        defaultValue='DEFAULT'
                         onChange={this.handleChange}
                     >
-                        <option value="Pick a post">Pick a post</option>
+                        <MenuItem value="DEFAULT">Pick a post</MenuItem>
                         {this.props.posts.length !== undefined &&
                             this.props.posts.map(
                                 (post) =>
                                     !post.deleted && (
-                                        <option value={post.id} key={post.id}>
+                                        <MenuItem value={post.id} key={post.id}>
                                             {post.title}
-                                        </option>
+                                        </MenuItem>
                                     )
                             )}
-                    </select>
-                    {/* <Select
-                        style={{ margin: '10px' }}
-                        name="parentId"
-                        defaultValue={'Pick a post'}
-                        onChange={this.handleChange}
-                    >
-                        <option value="Pick a post">Pick a post</option>
-                        {this.props.posts.length !== undefined &&
-                            this.props.posts.map(
-                                (post) =>
-                                    !post.deleted && (
-                                        <option value={post.id} key={post.id}>
-                                            {post.title}
-                                        </option>
-                                    )
-                            )}
-                    </Select> */}
+                    </Select>
                 </label>
                 <br />
                 <Button

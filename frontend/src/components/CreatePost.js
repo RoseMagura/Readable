@@ -4,6 +4,7 @@ import { handlePosting, handleUpdateCategory } from '../actions/shared';
 import Nav from './Nav';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 export const generateUID = () => {
     return (
@@ -57,13 +58,13 @@ class CreatePost extends Component {
                     <Select
                         style={{ margin: '10px' }}
                         name="category"
-                        defaultValue={'Pick a category'}
+                        defaultValue='DEFAULT'
                         onChange={this.handleChange}
                     >
-                        <option value="Pick a category">Pick a category</option>
-                        <option value="react">React</option>
-                        <option value="redux">Redux</option>
-                        <option value="udacity">Udacity</option>
+                        <MenuItem value="DEFAULT" disabled>Pick a category</MenuItem>
+                        <MenuItem value="react">React</MenuItem>
+                        <MenuItem value="redux">Redux</MenuItem>
+                        <MenuItem value="udacity">Udacity</MenuItem>
                     </Select>
                 </label>
                 <br />

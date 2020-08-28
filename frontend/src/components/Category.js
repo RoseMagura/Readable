@@ -15,6 +15,7 @@ class Category extends Component {
                 return (
                     <div>
                         {param.map((post) => (
+                            !post.deleted &&
                             <li key={post.id}>
                                 {post.category}
                                 <br />

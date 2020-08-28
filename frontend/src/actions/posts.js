@@ -1,11 +1,11 @@
-export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS';
-export const ADD_POST = 'ADD_POST';
-export const EDIT_POST = 'EDIT_POST';
-export const VOTE_ON_POST = 'VOTE_ON_POST';
-export const REMOVE_POST = 'REMOVE_POST';
-// export const RECEIVE_POSTS_FOR_CATEGORY = 'RECEIVE_POSTS_FOR_CATEGORY'
-// export const DELETE_COMMENT_FROM_POST = 'DELETE_COMMENT_FROM_POST';
-export const UPDATE_POST = 'UPDATE_POST';
+import {
+    RECEIVE_ALL_POSTS,
+    ADD_POST,
+    EDIT_POST,
+    VOTE_ON_POST,
+    REMOVE_POST,
+    UPDATE_POST
+} from './types.js';
 
 export function receivePosts(posts) {
     return {

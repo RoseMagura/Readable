@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleCommenting } from '../actions/shared';
 import { generateUID } from './CreatePost';
+import Nav from './Nav';
+import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
 
 class CreateComment extends Component {
     state = {
@@ -34,7 +37,8 @@ class CreateComment extends Component {
                 <br />
                 <label>
                     Responding To:
-                    <select
+                    <Select
+                        style={{ margin: '10px' }}
                         name="parentId"
                         defaultValue={'Pick a post'}
                         onChange={this.handleChange}
@@ -49,10 +53,17 @@ class CreateComment extends Component {
                                         </option>
                                     )
                             )}
-                    </select>
+                    </Select>
                 </label>
                 <br />
-                <input type="submit" value="Submit" />
+                <Button
+                    onClick={this.handleSubmit}
+                    style={{ margin: '10px' }}
+                    variant="contained"
+                    color="primary"
+                >
+                    Submit
+                </Button>
             </form>
         );
     }
@@ -75,6 +86,7 @@ class CreateComment extends Component {
     render() {
         return (
             <div>
+                <Nav />
                 <h1>Create Comment</h1>
                 {this.makeForm()}
             </div>

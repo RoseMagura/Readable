@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { handleCommentVote, handleDeleteComment } from '../actions/shared';
 import { deletePost, votePost } from './PostList';
 import { Link } from 'react-router-dom';
+import Nav from './Nav';
+import Button from '@material-ui/core/Button';
 
 export const deleteComment = (e, dispatch, parentId) => {
     e.preventDefault();
@@ -30,7 +32,10 @@ export const displayComments = (comments, dispatch) =>
                     {Math.abs(comment.voteScore) > 1
                         ? `${comment.voteScore} votes`
                         : `${comment.voteScore} vote`}
-                    <button
+                    <Button
+                        style={{ margin: '10px' }}
+                        variant="contained"
+                        color="primary"
                         id={`${comment.id}`}
                         name="upVote"
                         onClick={(e) => {
@@ -38,8 +43,11 @@ export const displayComments = (comments, dispatch) =>
                         }}
                     >
                         Upvote
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                        style={{ margin: '10px' }}
+                        variant="contained"
+                        color="primary"
                         id={`${comment.id}`}
                         name="downVote"
                         onClick={(e) => {
@@ -47,13 +55,22 @@ export const displayComments = (comments, dispatch) =>
                         }}
                     >
                         Downvote
-                    </button>{' '}
+                    </Button>{' '}
                     <br />
-                    <button>
-                        <Link to={`/comments/${comment.id}/edit`}>Edit</Link>
-                    </button>{' '}
+                    <Link to={`/comments/${comment.id}/edit`}>
+                        <Button
+                            style={{ margin: '10px' }}
+                            variant="contained"
+                            color="primary"
+                        >
+                            Edit
+                        </Button>
+                    </Link>{' '}
                     <br />
-                    <button
+                    <Button
+                        style={{ margin: '10px' }}
+                        variant="contained"
+                        color="primary"
                         id={`${comment.id}`}
                         name={`${comment.body}`}
                         onClick={(e) => {
@@ -61,7 +78,7 @@ export const displayComments = (comments, dispatch) =>
                         }}
                     >
                         Delete
-                    </button>{' '}
+                    </Button>{' '}
                     <br />
                 </li>
             )
@@ -96,6 +113,7 @@ class PostDetail extends Component {
 
         return (
             <div>
+                <Nav />
                 {post === undefined ? (
                     <h4>404 Page Not Found</h4>
                 ) : (
@@ -112,7 +130,10 @@ class PostDetail extends Component {
                         at {convertUnix(post.timestamp)}
                         <br />
                         {post.voteScore} votes
-                        <button
+                        <Button
+                            style={{ margin: '10px' }}
+                            variant="contained"
+                            color="primary"
                             id={`${post.id}`}
                             name="upVote"
                             onClick={(e) => {
@@ -120,8 +141,11 @@ class PostDetail extends Component {
                             }}
                         >
                             Upvote
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            style={{ margin: '10px' }}
+                            variant="contained"
+                            color="primary"
                             id={`${post.id}`}
                             name="downVote"
                             onClick={(e) => {
@@ -129,17 +153,28 @@ class PostDetail extends Component {
                             }}
                         >
                             Downvote
-                        </button>{' '}
+                        </Button>{' '}
                         <br />
                         {Math.abs(post.commentCount) !== 1
                             ? `${post.commentCount} comments`
                             : `${post.commentCount} comment`}{' '}
                         <br />
-                        <button id={`${post.id}`} name={`${post.title}`}>
-                            <Link to={`/posts/${postId}/edit`}>Edit</Link>
-                        </button>{' '}
+                        <Link to={`/posts/${postId}/edit`}>
+                            <Button
+                                style={{ margin: '10px' }}
+                                variant="contained"
+                                color="primary"
+                                id={`${post.id}`}
+                                name={`${post.title}`}
+                            >
+                                Edit
+                            </Button>
+                        </Link>{' '}
                         <br />
-                        <button
+                        <Button
+                            style={{ margin: '10px' }}
+                            variant="contained"
+                            color="primary"
                             id={`${post.id}`}
                             name={`${post.title}`}
                             onClick={(e) => {
@@ -148,7 +183,7 @@ class PostDetail extends Component {
                             }}
                         >
                             Delete
-                        </button>{' '}
+                        </Button>{' '}
                         <br />
                         <h2>Comments</h2>
                         {post.commentCount > 0 ? (
@@ -160,14 +195,26 @@ class PostDetail extends Component {
                                 {/* add a button to add comment after looping 
                             through comments */}
                                 <Link to={'/comments/create'}>
-                                    <button>Add a Comment</button>
+                                    <Button
+                                        style={{ margin: '10px' }}
+                                        variant="contained"
+                                        color="primary"
+                                    >
+                                        Add a Comment
+                                    </Button>
                                 </Link>
                             </ul>
                         ) : (
                             <div>
                                 <h5 key={post.id}>No Comments</h5>
                                 <Link to={'/comments/create'}>
-                                    <button>Add a Comment</button>
+                                    <Button
+                                        style={{ margin: '10px' }}
+                                        variant="contained"
+                                        color="primary"
+                                    >
+                                        Add a Comment
+                                    </Button>
                                 </Link>
                             </div>
                         )}

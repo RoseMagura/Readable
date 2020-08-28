@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { deleteComment, convertUnix } from './PostDetail';
 import { connect } from 'react-redux';
+import Nav from './Nav';
 import { handleGetCommentInfo } from '../actions/shared';
+import Button from '@material-ui/core/Button';
 
 class CommentDetail extends Component {
     componentDidMount() {
@@ -12,6 +14,7 @@ class CommentDetail extends Component {
         const { comments } = this.props;
         return (
             <div>
+                <Nav />
                 <h1>Comment Details</h1>
                 {comments.author} <br />
                 at {convertUnix(comments.timestamp)}
@@ -19,10 +22,29 @@ class CommentDetail extends Component {
                 {comments.body}
                 <br />
                 {comments.voteScore} votes
-                <button>Upvote</button>
-                <button>Downvote</button> <br />
-                <button>Edit</button> <br />
-                <button
+                <br />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ margin: '10px' }}
+                >
+                    Upvote
+                </Button>
+                <Button variant="contained" color="primary">
+                    Downvote
+                </Button>{' '}
+                <br />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ margin: '10px' }}
+                >
+                    Edit
+                </Button>{' '}
+                <br />
+                <Button
+                    variant="contained"
+                    color="primary"
                     id={`${comments.id}`}
                     name={`${comments.body}`}
                     onClick={(e) => {
@@ -31,7 +53,7 @@ class CommentDetail extends Component {
                     }}
                 >
                     Delete
-                </button>{' '}
+                </Button>{' '}
                 <br />
             </div>
         );
@@ -41,7 +63,6 @@ function mapStateToProps({ comments, dispatch }) {
     return {
         comments,
         dispatch,
-        // loading: posts.length === undefined,
     };
 }
 export default connect(mapStateToProps)(CommentDetail);

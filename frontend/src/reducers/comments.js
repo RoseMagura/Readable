@@ -6,7 +6,7 @@ import {
     EDIT_COMMENT,
     CREATE_COMMENT,
     VOTE_ON_COMMENT,
-} from '../actions/comments';
+} from '../actions/types';
 
 export default function comments(state = [], action) {
     switch (action.type) {

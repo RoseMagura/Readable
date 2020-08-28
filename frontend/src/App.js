@@ -16,6 +16,8 @@ import {
     handleGetCategories,
     handleGetAllComments,
 } from './actions/shared';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import theme from './theme/muiTheme';
 
 const NoMatchPage = () => {
     return <h3>404 - Not found</h3>;
@@ -29,6 +31,7 @@ class App extends Component {
     }
     render() {
         return (
+            <ThemeProvider theme={theme}>
             <Router>
                 <Switch>
                     <Route
@@ -112,6 +115,7 @@ class App extends Component {
                     </Route>
                 </Switch>
             </Router>
+            </ThemeProvider>
         );
     }
 }

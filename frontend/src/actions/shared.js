@@ -1,4 +1,7 @@
-import { receiveCategories } from './categories';
+import { 
+    receiveCategories, 
+    updateCategory, 
+    addPostsToCategory } from './categories';
 import {
     receivePosts,
     addPost,
@@ -44,6 +47,7 @@ export function handleGetAllPosts() {
     return (dispatch) => {
         return getAllPosts().then((posts) => {
             dispatch(receivePosts(posts));
+            dispatch(addPostsToCategory(posts))
         });
     };
 }

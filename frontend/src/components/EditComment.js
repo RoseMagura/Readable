@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleEditComment } from '../actions/shared';
+import Nav from './Nav';
+import Button from '@material-ui/core/Button';
 
 class EditComment extends Component {
     state = {
@@ -19,7 +21,14 @@ class EditComment extends Component {
                     />
                 </label>
                 <br />
-                <input type="submit" value="Submit" />
+                <Button
+                    onClick={this.handleSubmit}
+                    style={{ margin: '10px' }}
+                    variant="contained"
+                    color="primary"
+                >
+                    Submit
+                </Button>
             </form>
         );
     }
@@ -47,6 +56,7 @@ class EditComment extends Component {
         const comment = commentArray[0];
         return (
             <div>
+                <Nav />
                 <h1>Edit Comment</h1>
                 {comment !== undefined && this.makeForm(comment)}
             </div>

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { convertUnix, displayComments } from './PostDetail';
 import { deletePost, votePost } from './PostList';
 import { Link } from 'react-router-dom';
+import Nav from './Nav';
+import Button from '@material-ui/core/Button';
 
 class Category extends Component {
     renderSwitch(param, categoryId) {
@@ -27,7 +29,10 @@ class Category extends Component {
                                 at {convertUnix(post.timestamp)}
                                 <br />
                                 {post.voteScore} votes
-                                <button
+                                <Button
+                                    style={{ margin: '10px' }}
+                                    variant="contained"
+                                    color="primary"
                                     id={`${post.id}`}
                                     name="upVote"
                                     onClick={(e) => {
@@ -35,8 +40,11 @@ class Category extends Component {
                                     }}
                                 >
                                     Upvote
-                                </button>
-                                <button
+                                </Button>
+                                <Button
+                                    style={{ margin: '10px' }}
+                                    variant="contained"
+                                    color="primary"
                                     id={`${post.id}`}
                                     name="downVote"
                                     onClick={(e) => {
@@ -44,16 +52,23 @@ class Category extends Component {
                                     }}
                                 >
                                     Downvote
-                                </button>{' '}
+                                </Button>{' '}
                                 <br />
                                 {post.commentCount} comments <br />
-                                <button>
-                                    <Link to={`/posts/${post.id}/edit`}>
+                                <Link to={`/posts/${post.id}/edit`}>
+                                    <Button
+                                        style={{ margin: '10px' }}
+                                        variant="contained"
+                                        color="primary"
+                                    >
                                         Edit
-                                    </Link>
-                                </button>{' '}
+                                    </Button>
+                                </Link>{' '}
                                 <br />
-                                <button
+                                <Button
+                                    style={{ margin: '10px' }}
+                                    variant="contained"
+                                    color="primary"
                                     id={`${post.id}`}
                                     name={`${post.title}`}
                                     onClick={(e) =>
@@ -61,7 +76,7 @@ class Category extends Component {
                                     }
                                 >
                                     Delete
-                                </button>{' '}
+                                </Button>{' '}
                                 <br />
                             </li>
                         ))}
@@ -88,15 +103,11 @@ class Category extends Component {
             );
         return (
             <div>
+                <Nav />
                 <h3>{formattedTitle}</h3>
                 <div>
                     <h4>Posts</h4>
                     {!loading && this.renderSwitch(topicPosts, categoryId)}
-                </div>
-                <div>
-                    <button>
-                        <Link to="/posts/create">New Post</Link>
-                    </button>
                 </div>
                 <div>
                     <h4>Comments</h4>
@@ -104,7 +115,13 @@ class Category extends Component {
                         <div>
                             <h5>No Comments</h5>
                             <Link to={`/comments/create`}>
-                                <button>Add a Comment</button>
+                                <Button
+                                    style={{ margin: '10px' }}
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    Add a Comment
+                                </Button>
                             </Link>
                         </div>
                     )}
@@ -118,7 +135,13 @@ class Category extends Component {
                                 )}
                             {totalComments !== 0 && (
                                 <Link to={`/comments/create`}>
-                                    <button>Add a Comment</button>
+                                    <Button
+                                        style={{ margin: '10px' }}
+                                        variant="contained"
+                                        color="primary"
+                                    >
+                                        Add a Comment
+                                    </Button>
                                 </Link>
                             )}
                         </ul>

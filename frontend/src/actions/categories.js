@@ -1,5 +1,8 @@
-export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
-export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
+import {
+    RECEIVE_CATEGORIES,
+    UPDATE_CATEGORY,
+    ADD_POSTS_TO_CATEGORY
+} from './types';
 
 export function receiveCategories(categories) {
     return {
@@ -35,4 +38,11 @@ export function updateCategory(
         },
         index,
     };
+}
+
+export function addPostsToCategory(posts) {
+    return {
+        type: ADD_POSTS_TO_CATEGORY,
+        posts
+    }
 }

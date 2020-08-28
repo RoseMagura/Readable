@@ -5,7 +5,7 @@ import {
     VOTE_ON_POST,
     EDIT_POST,
     UPDATE_POST,
-} from '../actions/posts';
+} from '../actions/types';
 
 export default function posts(state = {}, action) {
     switch (action.type) {

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { convertUnix } from './PostDetail';
 import { handleDeletePost, handlePostVote } from '../actions/shared';
+import Button from '@material-ui/core/Button';
 
 export const deletePost = (e, dispatch) => {
     e.preventDefault();
@@ -71,7 +72,7 @@ class PostList extends Component {
                 this.sortByScore(posts);
                 break;
             default:
-                return 'no sort';
+                return '';
         }
     };
 
@@ -104,7 +105,10 @@ class PostList extends Component {
                                     {Math.abs(post.voteScore) > 1
                                         ? `${post.voteScore} votes`
                                         : `${post.voteScore} vote`}
-                                    <button
+                                    <Button
+                                        style={{ margin: '10px' }}
+                                        variant="contained"
+                                        color="primary"
                                         id={`${post.id}`}
                                         name="upVote"
                                         onClick={(e) => {
@@ -112,8 +116,11 @@ class PostList extends Component {
                                         }}
                                     >
                                         Upvote
-                                    </button>
-                                    <button
+                                    </Button>
+                                    <Button
+                                        style={{ margin: '10px' }}
+                                        variant="contained"
+                                        color="primary"
                                         id={`${post.id}`}
                                         name="downVote"
                                         onClick={(e) => {
@@ -121,19 +128,26 @@ class PostList extends Component {
                                         }}
                                     >
                                         Downvote
-                                    </button>{' '}
+                                    </Button>{' '}
                                     <br />
                                     {Math.abs(post.commentCount) !== 1
                                         ? `${post.commentCount} comments`
                                         : `${post.commentCount} comment`}{' '}
                                     <br />
-                                    <button>
-                                        <Link to={`/posts/${post.id}/edit`}>
+                                    <Link to={`/posts/${post.id}/edit`}>
+                                        <Button
+                                            style={{ margin: '10px' }}
+                                            variant="contained"
+                                            color="primary"
+                                        >
                                             Edit
-                                        </Link>
-                                    </button>{' '}
+                                        </Button>
+                                    </Link>{' '}
                                     <br />
-                                    <button
+                                    <Button
+                                        style={{ margin: '10px' }}
+                                        variant="contained"
+                                        color="primary"
                                         id={`${post.id}`}
                                         name={`${post.title}`}
                                         onClick={(e) =>
@@ -141,7 +155,7 @@ class PostList extends Component {
                                         }
                                     >
                                         Delete
-                                    </button>{' '}
+                                    </Button>{' '}
                                     <br />
                                 </li>
                             )

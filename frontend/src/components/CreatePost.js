@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handlePosting } from '../actions/shared';
+import Nav from './Nav';
+import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
 
 export const generateUID = () => {
     return (
@@ -51,8 +54,8 @@ class CreatePost extends Component {
                 <br />
                 <label>
                     Category:
-                    {/* use a loop to list categories? */}
-                    <select
+                    <Select
+                        style={{ margin: '10px' }}
                         name="category"
                         defaultValue={'Pick a category'}
                         onChange={this.handleChange}
@@ -61,10 +64,17 @@ class CreatePost extends Component {
                         <option value="react">React</option>
                         <option value="redux">Redux</option>
                         <option value="udacity">Udacity</option>
-                    </select>
+                    </Select>
                 </label>
                 <br />
-                <input type="submit" value="Submit" />
+                <Button
+                    onClick={this.handleSubmit}
+                    style={{ margin: '10px' }}
+                    variant="contained"
+                    color="primary"
+                >
+                    Submit
+                </Button>
             </form>
         );
     }
@@ -87,6 +97,7 @@ class CreatePost extends Component {
     render() {
         return (
             <div>
+                <Nav />
                 <h1>Create Post</h1>
                 {this.makeForm()}
             </div>

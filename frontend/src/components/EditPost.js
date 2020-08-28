@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleEditPost } from '../actions/shared';
+import Nav from './Nav';
+import Button from '@material-ui/core/Button';
 
 class EditPost extends Component {
     state = {
@@ -32,7 +34,14 @@ class EditPost extends Component {
                     />
                 </label>
                 <br />
-                <input type="submit" value="Submit" />
+                <Button
+                    onClick={this.handleSubmit}
+                    style={{ margin: '10px' }}
+                    variant="contained"
+                    color="primary"
+                >
+                    Submit
+                </Button>
             </form>
         );
     }
@@ -56,6 +65,7 @@ class EditPost extends Component {
         const post = postArray[0];
         return (
             <div>
+                <Nav />
                 <h1>EditPost</h1>
                 {this.makeForm(post)}
             </div>

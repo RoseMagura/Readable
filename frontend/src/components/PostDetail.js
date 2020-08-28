@@ -6,17 +6,17 @@ import { Link } from 'react-router-dom';
 import Nav from './Nav';
 import Button from '@material-ui/core/Button';
 
-export const deleteComment = (e, dispatch, parentId) => {
+export const deleteComment = (e, id, body, dispatch, parentId) => {
     e.preventDefault();
     const result = window.confirm(
-        `Are you sure you want to delete the comment ${e.target.name}?`
+        `Are you sure you want to delete the comment ${body}?`
     );
-    result && dispatch(handleDeleteComment(e.target.id, parentId));
+    result && dispatch(handleDeleteComment(id, parentId));
 };
 
-export const voteForComment = (e, dispatch) => {
+export const voteForComment = (e, id, option, dispatch) => {
     e.preventDefault();
-    dispatch(handleCommentVote(e.target.id, e.target.name));
+    dispatch(handleCommentVote(id, option));
 };
 
 export const displayComments = (comments, dispatch) =>
@@ -27,7 +27,7 @@ export const displayComments = (comments, dispatch) =>
                     {comment.author} <br />
                     at {convertUnix(comment.timestamp)}
                     <br />
-                    <Link to={`/comments/${comment.id}`}>{comment.body}</Link>
+                    {comment.body}
                     <br />
                     {Math.abs(comment.voteScore) > 1
                         ? `${comment.voteScore} votes`
@@ -36,10 +36,8 @@ export const displayComments = (comments, dispatch) =>
                         style={{ margin: '10px' }}
                         variant="contained"
                         color="primary"
-                        id={`${comment.id}`}
-                        name="upVote"
                         onClick={(e) => {
-                            voteForComment(e, dispatch);
+                            voteForComment(e, comment.id, 'upVote', dispatch);
                         }}
                     >
                         Upvote
@@ -48,10 +46,8 @@ export const displayComments = (comments, dispatch) =>
                         style={{ margin: '10px' }}
                         variant="contained"
                         color="primary"
-                        id={`${comment.id}`}
-                        name="downVote"
                         onClick={(e) => {
-                            voteForComment(e, dispatch);
+                            voteForComment(e, comment.id, 'downVote', dispatch);
                         }}
                     >
                         Downvote
@@ -71,10 +67,14 @@ export const displayComments = (comments, dispatch) =>
                         style={{ margin: '10px' }}
                         variant="contained"
                         color="primary"
-                        id={`${comment.id}`}
-                        name={`${comment.body}`}
                         onClick={(e) => {
-                            deleteComment(e, dispatch, comment.parentId);
+                            deleteComment(
+                                e,
+                                comment.id,
+                                comment.body,
+                                dispatch,
+                                comment.parentId
+                            );
                         }}
                     >
                         Delete
@@ -134,10 +134,8 @@ class PostDetail extends Component {
                             style={{ margin: '10px' }}
                             variant="contained"
                             color="primary"
-                            id={`${post.id}`}
-                            name="upVote"
                             onClick={(e) => {
-                                votePost(e, dispatch);
+                                votePost(e, post.id, 'upVote', dispatch);
                             }}
                         >
                             Upvote
@@ -146,10 +144,8 @@ class PostDetail extends Component {
                             style={{ margin: '10px' }}
                             variant="contained"
                             color="primary"
-                            id={`${post.id}`}
-                            name="downVote"
                             onClick={(e) => {
-                                votePost(e, dispatch);
+                                votePost(e, post.id, 'downVote', dispatch);
                             }}
                         >
                             Downvote
@@ -175,10 +171,13 @@ class PostDetail extends Component {
                             style={{ margin: '10px' }}
                             variant="contained"
                             color="primary"
-                            id={`${post.id}`}
-                            name={`${post.title}`}
                             onClick={(e) => {
-                                deletePost(e, this.props.dispatch);
+                                deletePost(
+                                    e,
+                                    post.id,
+                                    post.title,
+                                    this.props.dispatch
+                                );
                                 history.push('/');
                             }}
                         >

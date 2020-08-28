@@ -14,73 +14,84 @@ class Category extends Component {
             default:
                 return (
                     <div>
-                        {param.map((post) => (
-                            !post.deleted &&
-                            <li key={post.id}>
-                                {post.category}
-                                <br />
-                                <Link to={`/${categoryId}/${post.id}`}>
-                                    {post.title}
-                                </Link>
-                                <br />
-                                {post.body}
-                                <br />
-                                by {post.author}
-                                <br />
-                                at {convertUnix(post.timestamp)}
-                                <br />
-                                {post.voteScore} votes
-                                <Button
-                                    style={{ margin: '10px' }}
-                                    variant="contained"
-                                    color="primary"
-                                    id={`${post.id}`}
-                                    name="upVote"
-                                    onClick={(e) => {
-                                        votePost(e, this.props.dispatch);
-                                    }}
-                                >
-                                    Upvote
-                                </Button>
-                                <Button
-                                    style={{ margin: '10px' }}
-                                    variant="contained"
-                                    color="primary"
-                                    id={`${post.id}`}
-                                    name="downVote"
-                                    onClick={(e) => {
-                                        votePost(e, this.props.dispatch);
-                                    }}
-                                >
-                                    Downvote
-                                </Button>{' '}
-                                <br />
-                                {post.commentCount} comments <br />
-                                <Link to={`/posts/${post.id}/edit`}>
-                                    <Button
-                                        style={{ margin: '10px' }}
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                        Edit
-                                    </Button>
-                                </Link>{' '}
-                                <br />
-                                <Button
-                                    style={{ margin: '10px' }}
-                                    variant="contained"
-                                    color="primary"
-                                    id={`${post.id}`}
-                                    name={`${post.title}`}
-                                    onClick={(e) =>
-                                        deletePost(e, this.props.dispatch)
-                                    }
-                                >
-                                    Delete
-                                </Button>{' '}
-                                <br />
-                            </li>
-                        ))}
+                        {param.map(
+                            (post) =>
+                                !post.deleted && (
+                                    <li key={post.id}>
+                                        {post.category}
+                                        <br />
+                                        <Link to={`/${categoryId}/${post.id}`}>
+                                            {post.title}
+                                        </Link>
+                                        <br />
+                                        {post.body}
+                                        <br />
+                                        by {post.author}
+                                        <br />
+                                        at {convertUnix(post.timestamp)}
+                                        <br />
+                                        {post.voteScore} votes
+                                        <Button
+                                            style={{ margin: '10px' }}
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={(e) => {
+                                                votePost(
+                                                    e,
+                                                    post.id,
+                                                    'upVote',
+                                                    this.props.dispatch
+                                                );
+                                            }}
+                                        >
+                                            Upvote
+                                        </Button>
+                                        <Button
+                                            style={{ margin: '10px' }}
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={(e) => {
+                                                votePost(
+                                                    e,
+                                                    post.id,
+                                                    'downVote',
+                                                    this.props.dispatch
+                                                );
+                                            }}
+                                        >
+                                            Downvote
+                                        </Button>{' '}
+                                        <br />
+                                        {post.commentCount} comments <br />
+                                        <Link to={`/posts/${post.id}/edit`}>
+                                            <Button
+                                                style={{ margin: '10px' }}
+                                                variant="contained"
+                                                color="primary"
+                                            >
+                                                Edit
+                                            </Button>
+                                        </Link>{' '}
+                                        <br />
+                                        <Button
+                                            style={{ margin: '10px' }}
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={(e) =>
+                                                deletePost(
+                                                    e,
+                                                    post.id,
+                                                    post.title,
+                                                    this.props.dispatch
+                                                )
+                                            }
+                                        >
+                                            Delete
+                                        </Button>{' '}
+                                        <br />
+                                    </li>
+                                )
+                        )}
                     </div>
                 );
         }

@@ -1,7 +1,8 @@
-import { 
-    receiveCategories, 
-    updateCategory, 
-    addPostsToCategory } from './categories';
+import {
+    receiveCategories,
+    updateCategory,
+    addPostsToCategory,
+} from './categories';
 import {
     receivePosts,
     addPost,
@@ -47,7 +48,7 @@ export function handleGetAllPosts() {
     return (dispatch) => {
         return getAllPosts().then((posts) => {
             dispatch(receivePosts(posts));
-            dispatch(addPostsToCategory(posts))
+            dispatch(addPostsToCategory(posts));
         });
     };
 }
@@ -79,10 +80,10 @@ export function handlePosting(id, timestamp, title, body, author, category) {
     };
 }
 
-export function handleUpdateCategory (post, index) {
-    return dispatch => {
-        dispatch(updateCategory(post, index))
-    }
+export function handleUpdateCategory(post, index) {
+    return (dispatch) => {
+        dispatch(updateCategory(post, index));
+    };
 }
 
 export function handleCommenting(id, timestamp, body, author, parentId) {

@@ -7,7 +7,6 @@ import CreatePost from './components/CreatePost';
 import EditPost from './components/EditPost';
 import CreateComment from './components/CreateComment';
 import EditComment from './components/EditComment';
-import CommentDetail from './components/CommentDetail';
 import Category from './components/Category';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -32,89 +31,79 @@ class App extends Component {
     render() {
         return (
             <ThemeProvider theme={theme}>
-            <Router>
-                <Switch>
-                    <Route
-                        exact
-                        path="/"
-                        component={(props) => (
-                            <Homepage history={props.history} />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/:categoryId"
-                        component={(props) => (
-                            <Category
-                                categoryId={props.match.params.categoryId}
-                                history={props.history}
-                            />
-                        )}
-                    />
-                    <Route exact path="/posts">
-                        <PostList />
-                    </Route>
-                    <Route
-                        exact
-                        path="/posts/create"
-                        component={(props) => (
-                            <CreatePost history={props.history} />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/posts/:postId/edit"
-                        component={(props) => (
-                            <EditPost
-                                postId={props.match.params.postId}
-                                posts={props.posts}
-                                history={props.history}
-                            />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/comments/create"
-                        component={(props) => (
-                            <CreateComment history={props.history} />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/comments/:commentId"
-                        component={(props) => (
-                            <CommentDetail
-                                commentId={props.match.params.commentId}
-                                history={props.history}
-                            />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path="/comments/:commentId/edit"
-                        component={(props) => (
-                            <EditComment
-                                commentId={props.match.params.commentId}
-                                history={props.history}
-                            />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path={['/posts/:postId', '/:categoryId/:postId']}
-                        component={(props) => (
-                            <PostDetail
-                                postId={props.match.params.postId}
-                                posts={props.posts}
-                                history={props.history}
-                            />
-                        )}
-                    />
-                    <Route>
-                        <NoMatchPage />
-                    </Route>
-                </Switch>
-            </Router>
+                <Router>
+                    <Switch>
+                        <Route
+                            exact
+                            path="/"
+                            component={(props) => (
+                                <Homepage history={props.history} />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/:categoryId"
+                            component={(props) => (
+                                <Category
+                                    categoryId={props.match.params.categoryId}
+                                    history={props.history}
+                                />
+                            )}
+                        />
+                        <Route exact path="/posts">
+                            <PostList />
+                        </Route>
+                        <Route
+                            exact
+                            path="/posts/create"
+                            component={(props) => (
+                                <CreatePost history={props.history} />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/posts/:postId/edit"
+                            component={(props) => (
+                                <EditPost
+                                    postId={props.match.params.postId}
+                                    posts={props.posts}
+                                    history={props.history}
+                                />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/comments/create"
+                            component={(props) => (
+                                <CreateComment history={props.history} />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/comments/:commentId/edit"
+                            component={(props) => (
+                                <EditComment
+                                    commentId={props.match.params.commentId}
+                                    history={props.history}
+                                />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path={['/posts/:postId', '/:categoryId/:postId']}
+                            component={(props) => (
+                                <PostDetail
+                                    postId={props.match.params.postId}
+                                    posts={props.posts}
+                                    history={props.history}
+                                />
+                            )}
+                        />
+                        <Route>
+                            <NoMatchPage />
+                        </Route>
+                    </Switch>
+                </Router>
             </ThemeProvider>
         );
     }

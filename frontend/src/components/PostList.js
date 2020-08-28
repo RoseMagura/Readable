@@ -5,16 +5,17 @@ import { convertUnix } from './PostDetail';
 import { handleDeletePost, handlePostVote } from '../actions/shared';
 import Button from '@material-ui/core/Button';
 
-export const deletePost = (e, dispatch) => {
+export const deletePost = (e, id, title, dispatch) => {
     e.preventDefault();
     const result = window.confirm(
-        `Are you sure you want to delete the post ${e.target.name}?`
+        `Are you sure you want to delete the post ${title}?`
     );
-    result && dispatch(handleDeletePost(e.target.id));
+    result && dispatch(handleDeletePost(id));
 };
 
-export const votePost = (e, dispatch) => {
-    dispatch(handlePostVote(e.target.id, e.target.name));
+export const votePost = (e, id, option, dispatch) => {
+    e.preventDefault();
+    dispatch(handlePostVote(id, option));
 };
 
 class PostList extends Component {
@@ -109,10 +110,13 @@ class PostList extends Component {
                                         style={{ margin: '10px' }}
                                         variant="contained"
                                         color="primary"
-                                        id={`${post.id}`}
-                                        name="upVote"
                                         onClick={(e) => {
-                                            votePost(e, dispatch);
+                                            votePost(
+                                                e,
+                                                post.id,
+                                                'upVote',
+                                                dispatch
+                                            );
                                         }}
                                     >
                                         Upvote
@@ -121,10 +125,13 @@ class PostList extends Component {
                                         style={{ margin: '10px' }}
                                         variant="contained"
                                         color="primary"
-                                        id={`${post.id}`}
-                                        name="downVote"
                                         onClick={(e) => {
-                                            votePost(e, dispatch);
+                                            votePost(
+                                                e,
+                                                post.id,
+                                                'downVote',
+                                                dispatch
+                                            );
                                         }}
                                     >
                                         Downvote
@@ -148,11 +155,15 @@ class PostList extends Component {
                                         style={{ margin: '10px' }}
                                         variant="contained"
                                         color="primary"
-                                        id={`${post.id}`}
-                                        name={`${post.title}`}
                                         onClick={(e) =>
-                                            deletePost(e, this.props.dispatch)
+                                            deletePost(
+                                                e,
+                                                post.id,
+                                                post.title,
+                                                this.props.dispatch
+                                            )
                                         }
+                                        label="Delete"
                                     >
                                         Delete
                                     </Button>{' '}

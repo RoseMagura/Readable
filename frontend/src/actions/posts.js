@@ -4,7 +4,7 @@ import {
     EDIT_POST,
     VOTE_ON_POST,
     REMOVE_POST,
-    UPDATE_POST
+    UPDATE_POST,
 } from './types.js';
 
 export function receivePosts(posts) {
